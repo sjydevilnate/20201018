@@ -29,10 +29,19 @@
         즉, this.arr[0]=100; 과 같이 바꾸면 화면의 rendering 되지 않음.
         data 속성에 있는 reference 타입은 값의 변경시 재할당이 필요하다
         # reference 타입에는 Object, Array, Function, ...
+        new Vue({
+            el: "#",
+            data: {
+                msg1:  "aaa", /* string */
+                msg2: 123, /* number */
+                msg3: true, /* boolen */
+                msg4: [1,2,3] /* array */
+                msg5: { a:1, b: "2"} /*I object */
+            }
+        })
 
     왜 data 속성 중에 reference 타입은 재할당 방식으로 처리해야 하는가?
         data 속성 중에 value 타입은 대입 방식으로 처리 가능.
-
 
     해결방법
         1. Vue.set(object, key, value)를 이용해서 변경한다.
@@ -44,7 +53,7 @@
             this.$set(this.arr, 0, 300);
 
         3. splice()함수를 사용하여 변경한다.
-            this.arr.splice(0,1,500);
+            this.arr.splice(0,2,500);
 
         4. spread 연산자 재할당 ==> 배열 사본을 만들어 수정한 뒤 재할당. ES6 에서만 가능.
             var arr_copy=[...this.arr,70];
@@ -69,5 +78,34 @@
 
 </html>
 
-<!-- vue 스크립트 플러그인 임포트 -->
-
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            val: null,
+            i: null,
+            arr: [1, 2, 3, 4, 5]
+        },
+        methods: {
+            change1: function (event) {
+                //this.$data.arr[0] = 100;
+                //console.log(this.$data.arr); // [100,2,3,4,5]
+                //debugger;
+                Vue.set(this.$data.arr, 0, 100);
+                console.log(this.$data.arr); // [100,2,3,4,5]
+            },
+            change2: function (event) {
+                this.$set(this.$data.arr, 1, 300);
+                console.log(this.$data.arr); // [100,300,3,4,5]
+            },
+            change3: function (event) {
+                this.$data.arr.splice(0, 2, 500);
+            },
+            change4: function (event) {
+                this.$data.arr = [...this.$data.arr, 70];
+            },
+        },
+    });
+</script>
