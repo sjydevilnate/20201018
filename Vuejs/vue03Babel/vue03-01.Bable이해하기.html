@@ -55,14 +55,17 @@
 <!-- ES6 사용하기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"> /* JSX를 자바스크립트로 변환 */</script>
 <script type="text/babel">
-    const name = "abc"
-    let age = 10
+    /* babel: es6 ==> es5 번역하는 자바스크립트 컴파일러 */
+    
+    // ES6
+    const name = "abc"; // 읽기전용
+    let   age  = 10;  // 읽기쓰기
 
-    const getMessage = () => {
-        return "Hello, ES6"
+    const getMessage = ()=>{
+        return "Hello, ES6 World!!!";
     }
-
-    // 태그 찾기
-    var output_es6 = document.getElementById("output_es6");
+    
+    // 태그찾기 
+    const output_es6 = document.getElementById("output_es6");
     output_es6.innerText = getMessage();
 </script>
