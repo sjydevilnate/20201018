@@ -37,7 +37,7 @@
 <!-- vue 플러그인 임포트   -->
 <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
 <script>
-    new Vue({
+    var vm = new Vue({
         el: "#my",
         data: {
             message: "change message at mounted!!!",
@@ -50,4 +50,17 @@
             }
         },
     });
+
+    window.setTimeout(function(){
+        vm.$data.message = "change message after 3 seconds!!!";
+        vm.$data["message"] = "change message after 3 seconds!!!";
+        Vue.set(vm.$data, "message", "change message after 3 seconds!!!")
+    }, 3000); // 3000ms = 3s 
+    
+    window.setTimeout(function(){
+        vm.$data.message = "change message after 5 seconds!!!";
+        vm.$data["message"] = "change message after 5 seconds!!!";
+        Vue.set(vm.$data, "message", "change message after 5 seconds!!!")
+    }, 5000); // 5000ms = 5s 
+    
 </script>

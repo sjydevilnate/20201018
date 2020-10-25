@@ -53,7 +53,7 @@
         })
 
 
-        reference 타입인 경우의 해결방법
+        value 타입인 경우의 해결방법
             data: {
                 msg1:  "aaa", /* string */
                 msg2: 123, /* number */
@@ -61,7 +61,8 @@
             }
             1. Vue.set(this.$data,"msg1", "bbb");
             2. this.$set(this.$data, "msg1", "ccc");
-            3. this.$data.msg1 = "ddd";
+            3. this.$data["msg1"] = "ddd";
+            4. this.$data.msg1 = "ddd";
 
         reference 타입인 경우의 해결방법
             data: {
