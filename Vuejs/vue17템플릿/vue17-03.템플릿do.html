@@ -19,11 +19,11 @@
 
         문제.
         1. app1 의 message에 '<i>콧수염 괄호를 이용한 데이터 출력</i>' 가 바인딩 되게 하시오.
-        ==> 각자.
+            ==> 각자.
         2. app2 의 message에 template 속성을 사용하여 '<p>template 속성을 이용한 데이터 출력. {{message}} </p>' 가 바인딩 되게 하시오.
-        인스턴스에 template 속성을 설정하는 경우의 확인 사항.
-        "사랑해~~~"는 남아있는가? 사라지는가?
-        ==> 같이
+            인스턴스에 template 속성을 설정하는 경우의 확인 사항.
+            "사랑해~~~"는 남아있는가? 사라지는가?
+            ==> 같이
     </xmp>
     <hr>
 
@@ -41,3 +41,62 @@
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script>
+    //import axios from "axios";
+    
+    new Vue({
+        /* e dt mc^2 w */
+        el: "#app1",
+        data: {
+            message: "<i>콧수염 괄호를 이용한 데이터 출력</i>",
+        },
+        template : null,
+        methods: { },
+        components: null,
+        computed: { },
+        watch: { },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+    new Vue({
+        /* e dt mc^2 w */
+        el: "#app2",
+        data: {
+            message: "<i>template 속성을 이용한 데이터 출력</i>",
+        },
+        template : `
+        <div>
+            <p>
+                template 속성을 이용한 데이터 출력.
+                {{message}}
+            </p>
+            <p>
+                p2
+            </p>
+        </div>
+        `,
+        methods: {
+    
+        },
+        components: { }, 
+        computed: {
+    
+        },
+        watch: {
+    
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+</script>

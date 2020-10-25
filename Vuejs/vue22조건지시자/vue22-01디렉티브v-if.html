@@ -58,7 +58,7 @@
     </div>
 
     <h2>
-		v-else 연습 2
+        v-else 연습 2
         #app2 인스턴스 data 프로퍼티(속성) awesome 에 어떤값을 설쟁하면 될까?
     </h2>
     <div id="app2">
@@ -69,6 +69,10 @@
     <h2>
         v-if/v-else 연습 3
         위의 2 예제를 결합하는 예제 입니다. 
+        버튼을 클릭하면 awesome의 값을 반전시킨다. 
+        클릭하면 awesome : true ==>  awesome : false
+        클릭하면 awesome : false ==>  awesome : true
+        각자 실습
     </h2>
     <div id="app3">
         <button v-on:click="clickBind">클릭</button>
@@ -101,3 +105,128 @@
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"> /* vue 플러그인 임포트 */</script>
+<script>
+    //import axios from "axios";
+    
+    new Vue({
+        /* edtmc^2w */
+        el: "#app1",
+        data: {
+            awesome: true,
+        },
+        //template: ``,
+        methods: {
+    
+        },
+        components: { }, 
+        computed: {
+    
+        },
+        watch: {
+    
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+    //import axios from "axios";
+    
+    new Vue({
+        /* edtmc^2w */
+        el: "#app2",
+        data: {
+            awsome: false, /* false: null, undefined, 0, "" */
+        },
+        //template: ``,
+        methods: {
+    
+        },
+        components: { }, 
+        computed: {
+    
+        },
+        watch: {
+    
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+    //import axios from "axios";
+    
+    new Vue({
+        /* edtmc^2w */
+        el: "#app3",
+        data: {
+            awesome: true,    
+        },
+        //template: ``,
+        methods: {
+            clickBind: function(event){
+                // ~이면 ~ 아니면
+                if( this.$data.awesome === true ) {
+                    this.$data.awesome = false;
+                }
+                else {
+                    this.$data.awesome = true;
+                }
+                
+                // this.$data.awesome = !this.$data.awesome;
+            }
+        },
+        components: { }, 
+        computed: {
+    
+        },
+        watch: {
+    
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+    //import axios from "axios";
+    
+    new Vue({
+        /* edtmc^2w */
+        el: "#app5",
+        data: { 
+            type: 1,
+        },
+        //template: ``,
+        methods: {
+            clickBind: function(event){
+                var aa = (this.$data.type + 1) % 4;
+                Vue.set( this.$data, "type", aa ); 
+                // <==> this.$data.type = this.$data.type + 1;
+            }
+        },
+        components: { }, 
+        computed: {
+    
+        },
+        watch: {
+    
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+</script>

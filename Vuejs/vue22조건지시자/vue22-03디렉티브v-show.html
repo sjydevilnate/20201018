@@ -24,15 +24,15 @@
         [2] v-else 디렉티브 :
         [3] v-else-if 디렉티브 :
         [4] v-show 디렉티브 :
-        The use of the v-show directive is almost identical to that of v-if.
-        The only differences are that v-show does not support the <template> syntax
+            The use of the v-show directive is almost identical to that of v-if.
+            The only differences are that v-show does not support the <template> syntax
             렌더링 안됨
             display:none; <--> display:block; 를 사용.
 
-                [참조]
-                페이지 104
-                https://vuejs.org/v2/guide/conditional.html
-                https://riptutorial.com/vue-js/example/11981/v-if---v-else
+        [참조]
+        페이지 104
+        https://vuejs.org/v2/guide/conditional.html
+        https://riptutorial.com/vue-js/example/11981/v-if---v-else
     </xmp>
     <hr>
 
@@ -55,3 +55,22 @@
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* e dt mc^2 w */
+        el: "#app1",
+        data: {
+            a: true,
+        },
+        template: null,
+        methods: {
+            clickBind: function(event) {
+                this.$data.a = !this.$data.a;
+            },
+        },
+        components: {},
+        computed: {},
+        watch: {},
+    });
+</script>
