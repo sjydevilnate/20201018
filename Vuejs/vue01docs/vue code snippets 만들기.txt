@@ -8,6 +8,8 @@ https://www.youtube.com/watch?v=t4ESp_po6Wc
     "Vue Instance": {
         "prefix": "vuei",
         "body": [
+            "//import axios from "axios";",
+            "",
             "new Vue({",
             "    /* edtmc^2w */",
             "    el: \"${1:}\",",
