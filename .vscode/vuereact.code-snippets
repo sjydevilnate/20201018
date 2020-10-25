@@ -20,7 +20,7 @@
     "Vue Instance": {
         "prefix": "vuei",
         "body": [
-            "//import axios from "axios";",
+            "//import axios from \"axios\";",
             "",
             "new Vue({",
             "    /* edtmc^2w */",
