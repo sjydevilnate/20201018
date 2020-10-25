@@ -27,7 +27,7 @@
     <xmp>
 
         1. 이벤트 핸들러(리스너)에 이벤트 객체를 넘기는 방법에 대해서 알아본다.
-        <button onclick="handlerClick"              >handlerClick              </button>
+        <button onclick="handlerClick()"            >handlerClick()            </button>
         <button onclick="handlerClick(event       )">handlerClick(event       )</button>
         <button onclick="handlerClick(window.event)">handlerClick(window.event)</button>
         <button onclick="handlerClick(window      )">handlerClick(window      )</button>
@@ -55,7 +55,7 @@
     <div id="app">
         <div>
             <p>가능한 방법</p>
-            <button onclick="handlerClick()"            >handlerClick              </button>
+            <button onclick="handlerClick()"            >handlerClick()            </button>
             <button onclick="handlerClick(this        )">handlerClick(this)        </button>
             <br />
             <br />
@@ -83,5 +83,18 @@
 
 </html>
 
+<script>
 
+    function handlerClick(event, param1, param2){
+        console.log("handlerClick", event, param1, param2);
+    }
+    function clickWithParam(event, param1, param2) {
+        console.log("clickWithParam :: ", "param1>>", param1, ", param2>>", param2);
+    }
+    function clickWithNoParam(event) {
+        var param1 =  event.target.dataset.param1;
+        var param2 =  event.target.dataset.param2;
+        console.log("clickWithNoParam :: ", "param1>>", param1, ", param2>>", param2);
+    }
+</script>
 

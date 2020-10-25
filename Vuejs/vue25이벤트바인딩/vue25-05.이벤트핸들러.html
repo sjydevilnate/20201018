@@ -23,9 +23,12 @@
             웹 페이지의 가장 기본적인 연결 방식
             태그 속성에 자바스크립트 코드를 넣어 이벤트를 연결
         </pre>
+        
         <input type     = "button"
-            value       = "인라인 이벤트 핸들러 작성"
-            onclick     = "btn_onclick"
+            value       = "인라인 클릭 이벤트 핸들러 작성"
+            onclick     = "btn_onclick()" />
+        <input type     = "button"
+            value       = "인라인 마우스 이벤트 핸들러 작성"
             onmouseover = "btn_onmouseover(this)"
             onmouseout  = "btn_onmouseout(window.event, 123)"
             onmousedown = "btn_onmousedown(this)"
@@ -56,5 +59,28 @@
 
 </html>
 
+<script>
+    // 인라인 이벤트 핸들러 설정
+    function btn_onclick(event){
+        console.log("btn_onclick", event);
+        window.alert( '인라인 이벤트 핸들러 btn_onclick' );
+    }
+    function btn_onmouseover(event) {
+        console.log("btn_onmouseover", event);
+        window.alert( '인라인 이벤트 핸들러 btn_onmouseover' );
+    }
+    function btn_onmousedown(event) {
+        console.log("btn_onmouseover", event);
+        window.alert( '인라인 이벤트 핸들러 btn_onmousedown' );
+    }
+    function btn_onmouseout(event, val1) {
+        console.log("btn_onmouseout", event, val1);
+        window.alert( '인라인 이벤트 핸들러 btn_onmouseout' );
+    }
+    function btn_onmouseup(event, val1, val2) {
+        console.log("btn_onmouseup", event, val1, val2);
+        window.alert( '인라인 이벤트 핸들러 btn_onmouseup' );
+    }
 
-
+</script>
+

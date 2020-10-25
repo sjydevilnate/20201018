@@ -49,11 +49,19 @@
 
 </html>
 
-    
 <script>
-    var btnclick = function (event) {
-        alert("btnclick");
-    };
-</script>
 
+    // id 속성으로 찾기. 엘리먼트 한개 리턴.
+    var btn = document.getElementById('btn');
+    console.log(btn);
+
+    //  class 속성으로 찾기. 엘리먼트 여러개 리턴.
+    var classes = document.getElementsByClassName('고전이벤트핸들러');
+    console.log(classes);
+
+    // name 속성으로 찾기. 엘리먼트 여러개 리턴.
+    var names = document.getElementsByName('표준이벤트핸들러');
+    console.log(names);
+
+</script>
 
