@@ -34,18 +34,19 @@
         자바스크립를 이용하여
 
         1. 학습. "버튼1" 을 클릭하면
-        getElementById()를 사용하여 배경색이 orange 인 엘리먼트를 찾아서
-        class 속성에 csbord 와 whsize 스타일을 추가하고
-        style 속성에 배경색(background-color)을 aqua 로 설정하시오.
+            getElementById()를 사용하여 배경색이 orange 인 엘리먼트를 찾아서
+            class 속성에 csbord 와 whsize 스타일을 추가하고
+            style 속성에 배경색(background-color)을 aqua 로 설정하시오.
 
-        DOM API 에서 속성값 읽기 : getArribute()
-        DOM API 에서 속성값 쓰기 : setArribute()
+            DOM API 에서 속성값 읽기 : getArribute()
+            DOM API 에서 속성값 쓰기 : setArribute()
 
         2. 과제. "버튼2" 을 클릭하면
-        querySelector()를 사용하여 배경색이 orange 인 엘리먼트를 찾아서
-        csbord 와 whsize 스타일을 추가하고 배경색을 yellow 로 설정하시오.
+            querySelector()를 사용하여 배경색이 orange 인 엘리먼트를 찾아서
+            csbord 와 whsize 스타일을 추가하고 배경색을 yellow 로 설정하시오.
 
-        3. 학습. v-bind 지시자를 사용하여 id="app3" 엘리먼트에 class 속성을 적용하시오.
+        3. 학습. 
+            v-bind 지시자를 사용하여 id="app3" 엘리먼트에 class 속성을 적용하시오.
         id="app3" 엘리먼트를 찾고 csbord 와 whsize 스타일을 추가하고 <== 같이 배경색을 yellow 로 설정하시오. <==각자 </xmp>
             <hr>
 
@@ -84,6 +85,61 @@
 
 </html>
 
-
+<script>
+    function btn1_onclick(event){
+        // 태그 찾기: <div id="app" style="background-color: orange;">
+        var tag = document.getElementById("app");
+        tag.setAttribute("class", "csbord whsize");
+        tag.setAttribute("style", "background-color: aqua;")
+    }
+    function btn2_onclick(event) {
+        // 태그 찾기: <div id="app" style="background-color: orange;">
+        var tag = document.getElementById("app");
+        tag.className ="csbord whsize";
+        tag.style.backgroundColor="aqua";
+    }
+</script>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    //import axios from "axios";
+    
+    new Vue({
+        /* edtmc^2w */
+        el: "#app3",
+        data: {
+            css1 : {
+                csbord: false,
+                whsize: false,
+            },
+        },
+        //template: ``,
+        methods: {
+            btn5_onclick: function (event, show) {
+                this.$data.css1.csbord = show;
+                this.$data.css1.whsize = show;
+            },
+            btn6_onclick : function(event, className, show ){                
+                //this.$data.css1.csbord = show;                            
+                //this.$data.css1["csbord"] = show;                
+                //this.$data.css1.whsize = show;
+                //this.$data.css1["whsize"] = show;
+                this.$data.css1[className] = show;
+            },
+        },
+        components: { }, 
+        computed: {
+    
+        },
+        watch: {
+    
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+</script>
