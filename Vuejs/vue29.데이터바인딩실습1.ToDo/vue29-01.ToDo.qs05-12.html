@@ -207,6 +207,12 @@
         { id: 3, todo: "ES6 학습", done: false },
         { id: 4, todo: "잠실 야구장", done: false }
     ]
+
+    기능 추가
+    1. add 할 때 this.$data.todoItems 가 빈 배열인 경우 기능 추가
+    2. add 후 input 태그의 입력 값 지우기. 
+    3. 토글 할 때 findIndex 로 못 찾는 경우에 대한 방어 코드 추가.
+    4. input 태그에 빈 문자일이 입력 되는 경우는 배열에 추가되지 않게. 
         
     </pre>
     <hr>
@@ -275,12 +281,12 @@
         data: {
             newTodoItem: null,
             showModal: null, 
-            todoItems : [
+            todoItems: [
                 { id: 1, todo: "영화보기", done: false },
                 { id: 2, todo: "주말 산책", done: true },
                 { id: 3, todo: "ES6 학습", done: false },
                 { id: 4, todo: "잠실 야구장", done: false }
-            ]
+            ],
         },
         //template: ``,
         methods: {
@@ -294,15 +300,25 @@
             },
             addTodo: function(event){
                 // create 
-                if( this.$data.newTodoItem !== "".trim() ){
+                if( this.$data.newTodoItem && this.$data.newTodoItem.trim() !== "" ){
                     /* max 를 id 를 찾는방법
                         1. array.reduce() 사용
                         2. array.map()과 Math.max()를 사용하는 방법
                     */
-                    var maxObj = this.$data.todoItems.reduce( function(prevItem, nextItem){
-                        // 최대 id 값을 갖고있는 item을 찾는다. 
-                        return prevItem.id> nextItem.id ? prevItem : nextItem; // 
-                    });
+                    var maxObj = null;
+                    if( this.$data.todoItems.length === 0) {
+                        maxObj = {
+                            id: 0,
+                            todo: "",
+                            done: false,
+                        }
+                    }
+                    else {
+                        maxObj = this.$data.todoItems.reduce(function (prevItem, nextItem) {
+                            // 최대 id 값을 갖고있는 item을 찾는다. 
+                            return prevItem.id > nextItem.id ? prevItem : nextItem; // 
+                        });
+                    }
                     console.log(maxObj);
 
                     var newid = maxObj.id + 1;
@@ -340,8 +356,11 @@
                         return false;
                     } 
                 });
-                //this.$data.todoItems[index].done = !this.$data.todoItems[index].done;
-                Vue.set( this.$data.todoItems[index], "done", !this.$data.todoItems[index].done);
+
+                if( index >= 0 ){
+                    //this.$data.todoItems[index].done = !this.$data.todoItems[index].done;
+                    Vue.set(this.$data.todoItems[index], "done", !this.$data.todoItems[index].done);
+                }
             },
             removeTodo: function(id, index) {
                 // delete: ;
