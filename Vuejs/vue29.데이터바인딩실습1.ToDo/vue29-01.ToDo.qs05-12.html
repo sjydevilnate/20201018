@@ -285,7 +285,12 @@
         //template: ``,
         methods: {
             checked : function(done){
-                
+                if( done ) {
+                    return "checked";// 또는 {checked: true}
+                }
+                else {
+                    return ""; // 또는 {checked: false}
+                }                
             },
             addTodo: function(event){
                 // create 
@@ -293,8 +298,20 @@
             },
             doneToggle: function(id) {
                 // update
-                //var index = 
-
+                // object array 에서 찾는 방법
+                // 1. array.findIndex()을 사용하는 방법
+                // 2. array.filter()을 사용하는 방법
+                var index = this.$data.todoItems.findIndex( function(item){
+                    //return item.id === id;
+                    if( item.id === id ){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    } 
+                });
+                //this.$data.todoItems[index].done = !this.$data.todoItems[index].done;
+                Vue.set( this.$data.todoItems[index], "done", !this.$data.todoItems[index].done);
             },
             removeTodo: function(id, index) {
                 // delete: ;
@@ -321,6 +338,7 @@
         },
         updated: function() {
             console.log("updated");
+            console.log(this.$data.todoItems);
         },
     });
 </script>
