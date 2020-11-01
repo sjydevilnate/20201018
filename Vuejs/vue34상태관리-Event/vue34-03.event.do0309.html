@@ -31,24 +31,88 @@
         [참조]page 62~75
 
         1. child-component 컴포넌트 만들기.
-        pdtmc^2w 설정
+            pdtmc^2w 설정
         2. child-component 컴포넌트 템플릿에는 아래 태그를 추가한다.
-        <div>
-            <button v-on:click="showLog">show</button>
-        </div>
+            <div>
+                <button v-on:click="showLog">show</button>
+            </div>
         3. child-component 컴포넌트 에서 버튼을 클릭하면
-        show-log 라는 사용자 이벤트를 발생시키고
-        "abc" 와 123 을 값으로 전달하시오
+            show-log 라는 사용자 이벤트를 발생시키고
+            "abc" 와 123 을 값으로 전달하시오
+        4. 기능 추가 
+            자식 컴포넌트에서 받은 값을 부모 컴포넌트에 
+            출력되게 기능을 추가하시오.
     </xmp>
 
     <img src="../images/components_parent_child.png" alt="" srcset="">
     <hr>
     <div id="app">
+        자식 컴포넌트에서 받은 값: {{mesg}}
         <child-component v-on:show-log="printText"></child-component>
     </div>
-
 </body>
-
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    Vue.component("child-component", { 
+        /* pdtmc^2w */
+        props: [] ,
+        data: function() {
+            return { }
+        },
+        template: `
+            <div>
+                <button v-on:click="showLog">show</button>
+            </div>
+        `,
+        methods: {
+            showLog: function(event){
+                // 사용자 정의 이벤트를 발생시킨다. 
+                //this.$emit( "사용자 정의 이벤트명", 인자값들, );
+                this.$emit("show-log", "abc", 123);
+            }
+        },
+        components: { },
+        computed: {
+    
+        },
+        watch: {
+    
+        },
+    });
+    
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            mesg: null,
+        },
+        //template: ``,
+        methods: {
+            printText: function(param1, param2){
+                // 인자명 대신에 arguments 를  사용해도 된다. 
+                console.log("received an event", arguments);
+                console.log("received an event", param1, param2);
+
+                // 화면에 매개변수를 받은 값이 출력되게 기능 추가하시오.
+                //this.$data.mesg = "aaaa";
+                Vue.set(this.$data, "mesg", param1+ " ||| " + param2);
+            },
+        },
+        components: { }, 
+        computed: {
+    
+        },
+        watch: {
+    
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+</script>
