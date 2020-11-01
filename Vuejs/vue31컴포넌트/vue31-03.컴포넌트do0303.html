@@ -16,11 +16,12 @@
 
 <body>
     <xmp>
+        왜 컴포넌트를 사용하는가? 컴포넌트를 재사용하기 위해서.
         Vue 컴포넌트 만드는 방법을 배운다.
 
-        왜 컴포넌트를 사용하는가? 컴포넌트를 재사용하기 위해서.
-        Vue 컴포넌트는 인스턴스의 모든 옵션을 사용할 수 있다
-        여러개의 Component 사용이 가능하다.
+        1. Vue 컴포넌트 만드는 방법을 실습. 페이지 53 참조
+        2. 지역 컴포넌트를 인스턴스에 등록하는 방법 실습. 페이지 55 참조
+        3. 인스턴스에서 컴포넌트로 데이터를 넘겨는 방법 실습. 페이지 65 참조
 
         전역 컴포넌트 템플릿
         <div>
@@ -31,8 +32,9 @@
         지역 컴포넌트 템플릿
         <div>
             지역 컴포넌트가 등록되었습니다!
-            <span style="border: 1px dashed blue; background-color:lightgray; padding: 5px;"
-                onclick="lclick">{{localmsg}}</span>
+            <span style="border: 1px dashed blue; background-color:lightgray; padding: 5px;" onclick="lclick">
+                {{localmsg}}
+            </span>
         </div>
 
         [참조]
@@ -56,3 +58,81 @@
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+
+    //import axios from "axios";
+    // 전역 컴포넌트 만들기 : global-component
+    Vue.component("global-component", { 
+        /* pdtmc^2w */
+        props: ["propsdata"] ,
+        data: function() {
+            return {
+                // propsdata: null,
+             }
+        },
+        template: `
+            <div>
+                전역 컴포넌트
+                <button v-on:click="gclick">{{propsdata}}</button>
+            </div>
+        `,
+        methods: {
+            gclick: function(event) {
+                console.log("gclick", event.target);
+            }
+        },
+        components: { },
+        computed: { },
+        watch: { },
+    });
+
+    // 지역 컴포넌트 만들기: local-component
+    var localComponent = { 
+        /* pdtmc^2w */
+        props: ["localmsg"] ,
+        data: function() {
+            return { 
+                // localmsg: null,
+                localstyle : {
+                    border: "1px dashed blue", 
+                    backgroundColor: "lightgray", 
+                    padding: "5px",
+                },
+            }
+        },
+        template: `
+        <div>
+            지역 컴포넌트가 등록되었습니다!
+            <span v-bind:style="localstyle" v-on:click="lclick">
+                {{localmsg}}
+            </span>
+        </div>
+        `,
+        methods: {
+            lclick: function(event){
+                console.log("lclick");
+            }
+        },
+        components: { },
+        computed: { },
+        watch: { },
+    }
+
+    // 인스턴스 만들기
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            globalmsg1: "전역 메시지 1",
+            globalmsg2: "전역 메시지 2",
+            localmsg1: "지역 메시지 1",
+            localmsg2: "지역 메시지 2",
+        },
+        components: { 
+            /* 지역 컴포넌트 등록할 때 사용 */
+            "local-component": localComponent
+        }, 
+    });
+
+</script>
