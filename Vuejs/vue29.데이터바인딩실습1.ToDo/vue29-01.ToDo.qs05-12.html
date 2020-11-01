@@ -265,3 +265,62 @@
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    //import axios from "axios";
+    
+    new Vue({
+        /* edtmc^2w */
+        el: "#todolistapp",
+        data: {
+            newTodoItem: null,
+            showModal: null, 
+            todoItems : [
+                { id: 1, todo: "영화보기", done: false },
+                { id: 2, todo: "주말 산책", done: true },
+                { id: 3, todo: "ES6 학습", done: false },
+                { id: 4, todo: "잠실 야구장", done: false }
+            ]
+        },
+        //template: ``,
+        methods: {
+            checked : function(done){
+                
+            },
+            addTodo: function(event){
+                // create 
+
+            },
+            doneToggle: function(id) {
+                // update
+                //var index = 
+
+            },
+            removeTodo: function(id, index) {
+                // delete: ;
+                // 방법1: array.splice() 을 사용하는 방법
+                // 방법2: array.map() 을 사용하는 방법
+                this.$data.todoItems.splice(index, 1);
+
+            },
+            clearTodo: function(event){
+                // delete
+                //this.$data.todoItems = [];
+                Vue.set(this.$data, "todoItems", []);
+            },
+        },
+        components: { }, 
+        computed: {
+    
+        },
+        watch: {
+    
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+</script>
