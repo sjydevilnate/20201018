@@ -294,6 +294,36 @@
             },
             addTodo: function(event){
                 // create 
+                if( this.$data.newTodoItem !== "".trim() ){
+                    /* max 를 id 를 찾는방법
+                        1. array.reduce() 사용
+                        2. array.map()과 Math.max()를 사용하는 방법
+                    */
+                    var maxObj = this.$data.todoItems.reduce( function(prevItem, nextItem){
+                        // 최대 id 값을 갖고있는 item을 찾는다. 
+                        return prevItem.id> nextItem.id ? prevItem : nextItem; // 
+                    });
+                    console.log(maxObj);
+
+                    var newid = maxObj.id + 1;
+                    /*
+                    this.$data.todoItems[this.$data.todoItems.length] = {
+                       id: newid 
+                       todo: this.$data.newTodoItem, 
+                       done: false,
+                    };
+                    */
+                    Vue.set(
+                        this.$data.todoItems, 
+                        this.$data.todoItems.length, 
+                        {
+                            id: newid,
+                            todo: this.$data.newTodoItem, 
+                            done: false,
+                        } 
+                    );
+
+                }
 
             },
             doneToggle: function(id) {
