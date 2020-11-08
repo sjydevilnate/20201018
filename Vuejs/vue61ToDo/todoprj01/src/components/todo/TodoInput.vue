@@ -125,8 +125,8 @@ input:focus {
 export default {
     data: function(){
         return {
-            showModal: false,
             newTodoItem: null,
+            showModal: false,
         }
     },
     methods: {
