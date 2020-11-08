@@ -48,10 +48,10 @@
        . getter:
 
     작업1
-        {{header}} 에는 "Vuex 사용 앱" 가 나오게 
-        {{welcome}} 에는 "HELLO WORLD" 가 나오게 
-        {{counter}} 에는 0 이 나오게 
-    작업2 
+        {{header}} 에는 "Vuex 사용 앱" 가 나오게
+        {{welcome}} 에는 "HELLO WORLD" 가 나오게
+        {{counter}} 에는 0 이 나오게
+    작업2
         <button v-on:click="decrement">나를 빼줘</button>
     </pre>
     <hr>
@@ -67,3 +67,86 @@
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vuex@3.3.0/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
+<script>
+    
+    // vuex 인스턴스 만들기. 
+    var store = new Vuex.Store({
+        actions: {
+            increment: function(mutations, value){
+
+            },
+            decrement: function (mutations, value) {
+
+            },
+        },
+        mutations: {
+            increment: function(state, value){
+
+            },
+            decrement: function(state, value){
+
+            },
+        },
+        state: {
+            /* vue 인스턴스에서 사용되던 data */
+            counter: 0,
+            welcome: "HELLO WORLD",
+        },
+        getters: {
+            /* 메서드로 만드는데  메서드명은 state 의 이름을 그대로 사용 */
+            counter: function(state){
+                return state.couter;
+            },
+            welcome: function(state){
+                return state.welcome;
+            }
+        }
+    })
+
+    
+
+    // vue 인스턴스 만들기.
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: { 
+            header: "Vuex 사용 앱",
+            //welcome: "HELLO WORLD",
+            //counter: 0    
+        },
+        //template: ``,
+        methods: {
+            increment:function(event){
+                console.log("increment");
+                // store.dispatch("액션명", 값);
+                store.dispatch("increment", 10 );
+            },
+            decrement: function (event) {
+                console.log("decrement");
+                // store.dispatch("액션명", 값);
+                store.dispatch("decrement", -10);
+            },
+        },
+        components: { }, 
+        computed: {
+            counter: function(){
+                debugger;
+                return store.getters.counter;
+            },
+            welcome: function(){
+                return store.getters.welcome;
+            },
+        },
+        watch: {
+    
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+</script>
