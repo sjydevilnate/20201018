@@ -34,15 +34,15 @@
         예제 "34-ex-01-counter.html" 를 Vuex를 사용하는 방법으로 바꾸어 본다.
 
         이 앱의 특징은 다음과 같습니다.
-        + 버튼을 클릭하면 카운터가 올라가고
-        - 버튼을 클릭하면 카운터가 감소됩니다.
+          + 버튼을 클릭하면 카운터가 올라가고
+          - 버튼을 클릭하면 카운터가 감소됩니다.
 
-        child-componet 템플릿 태그는 아래와 같이 설정하시오.
-        <div class="component-child">
-            Child counter : {{ num }} <br>
-            <button name="child" v-on:click="addCounter">+</button>
-            <button name="child" v-on:click="subCounter">-</button>
-        </div>
+          child-componet 템플릿 태그는 아래와 같이 설정하시오.
+          <div class="component-child">
+              Child counter : {{ num }} <br>
+              <button name="child" v-on:click="addCounter">+</button>
+              <button name="child" v-on:click="subCounter">-</button>
+          </div>
     </xmp>
     <hr>
 
@@ -53,10 +53,131 @@
         <p></p>
 
         <!-- Child 컴포넌트를 등록하고 counter 데이터 속성을 props로 전달한다. -->
-        <component-child></component-child>
+        <component-child 
+            v-on:add-counter="addCounter" 
+            v-on:sub-counter="subCounter">
+        </component-child>
     </div>
 </body>
 
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vuex@3.3.0/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
+<script>
+
+    // Store(Vuex 인스턴스) 만들기
+    const store  = new Vuex.Store({
+        actions : {
+            // 비동기 호출
+            // 첫번째 인자는 무조건 mutations
+            // commit() 호출
+            increment: function(mutations, value ){
+                //setTimeout(function () {
+                    mutations.commit( "increment", value);
+                //}, 1000);
+            },
+            decrement: function(mutations, value ){
+                //setTimeout(function () {
+                    mutations.commit( "decrement", value);
+                //}, 1000);
+            },
+        },
+        mutations  : {
+            // state 변경
+            // 첫번째 인자는 무조건 state
+            increment: function(state, value){
+                state.counter =  state.counter  + value;
+            },
+            decrement: function(state, value){
+                state.counter =  state.counter  + value;
+            },
+        },
+        state : {
+            counter: 0,
+        },
+        getters : {
+            // 첫번째 인자는 무조건 state
+            counter : function(state) {
+                return state.counter;
+            },
+        }
+    });
+
+    Vue.component("component-child", {
+        /* pdtmc^2w */
+        props: [],
+        data: function () {
+            return {
+            }
+        },
+        template: `
+          <div class="component-child">
+              Child counter : {{ num }} <br>
+              <button name="child" v-on:click="addCounter">+</button>
+              <button name="child" v-on:click="subCounter">-</button>
+          </div>
+        `,
+        methods: {
+            addCounter: function (event) {
+                //this.$emit("add-counter", +10);                
+                //store.dispatch("액션명", 액션값);
+                store.dispatch("increment", 10);
+            },
+            subCounter: function (event) {
+                //this.$emit("sub-counter", +10);
+                //store.dispatch("액션명", 액션값);
+                store.dispatch("decrement", -10);
+            },
+        },
+        components: {},
+        computed: {
+            num : function(){
+                return store.getters.counter;
+            }
+        },
+        watch: {
+
+        },
+    });
+
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            //counter: 0,
+        },
+        //template: ``,
+        methods: {
+            addCounter: function (event) {
+                //this.$data.counter = this.$data.counter + 1;     
+                //Vue.set(this.$data, "counter", this.$data.counter + 1);
+                //store.dispatch("액션명", 액션값);
+                store.dispatch("increment", 1);
+            },
+            subCounter: function (event) {
+                //this.$data.counter = this.$data.counter - 1;     
+                //Vue.set(this.$data, "counter", this.$data.counter - 1);                
+                //store.dispatch("액션명", 액션값);
+                store.dispatch("decrement", -1);
+            },
+        },
+        components: {},
+        computed: {
+            counter: function(){
+                return store.getters.counter;
+            }
+        },
+        watch: {
+
+        },
+        mounted: function () {
+            console.log("mounted");
+        },
+        updated: function () {
+            console.log("updated");
+        },
+    });
+
+</script>

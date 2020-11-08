@@ -128,6 +128,19 @@ http.createServer( function(req, res) {
 
     var urlpath = $url.parse(req.url).pathname;
 
+    if( urlpath === '/' && req.method.toUpperCase()==='GET'  ) {
+        var msg = "Node 서버가 실행 중입니다.";
+        res.writeHead(200, {
+            'Access-Control-Allow-Origin': '*', /* 크로스 도메인 지원 설정 */
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE', /* Request methods you wish to allow */
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization', /* Request headers you wish to allow */
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Content-Length': Buffer.byteLength(msg)
+        });
+        res.write(msg);
+        res.end();
+    }
+
     if( urlpath === '/text' && req.method.toUpperCase()==='GET'  ) {
         // 비동기적 읽기
         var filename = __dirname + '/item.txt';
@@ -315,4 +328,4 @@ http.createServer( function(req, res) {
 
 }).listen(5050, 'localhost');
 
-console.log('start server - anonymous function');
+console.log('start server - anonymous function');

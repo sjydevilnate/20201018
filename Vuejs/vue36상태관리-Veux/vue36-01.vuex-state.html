@@ -59,8 +59,8 @@
         <h1>{{header}}</h1>
         <h2>{{welcome}}</h2>
         <h3>{{counter}}</h3>
-        <button v-on:click="increment">나를 대해줘</button>
-        <button v-on:click="decrement">나를 빼줘</button>
+        <button v-on:click="increment">더해줘</button>
+        <button v-on:click="decrement">빼줘</button>
     </div>
 </body>
 
@@ -74,38 +74,51 @@
     // vuex 인스턴스 만들기. 
     var store = new Vuex.Store({
         actions: {
+            /* 왜 actions를 사용하나? 비동기식 처리 위해서 */
+            /* 첫번째 인자는 무조건 mutations 사용. */
+            /* 두번째 인자는 값. */
             increment: function(mutations, value){
-
+                // 비동기 호출 
+                window.setTimeout( function(){
+                    // mutation 호출
+                    mutations.commit("increment", value);
+                }, 3000); // 3000ms = 3s 지연
             },
             decrement: function (mutations, value) {
-
+                // 비동기 호출
+                window.setTimeout(function () {
+                    mutations.commit("decrement", value);
+                }, 3000); // 3000ms = 3s 지연
             },
         },
         mutations: {
+            /* 왜 mutations를 사용하나? state 변경 위해서 */
+            // 첫번째 인자는 무조건 state
             increment: function(state, value){
-
+                //state 변경
+                state.counter = state.counter + value; // value는 변경 값
             },
             decrement: function(state, value){
-
+                //state 변경
+                state.counter = state.counter + value; // value는 변경 값
             },
         },
         state: {
-            /* vue 인스턴스에서 사용되던 data */
+            /* vue 인스턴스에서 사용되던 counter */
             counter: 0,
             welcome: "HELLO WORLD",
         },
         getters: {
             /* 메서드로 만드는데  메서드명은 state 의 이름을 그대로 사용 */
+            // 첫번째 인자는 무조건 state
             counter: function(state){
-                return state.couter;
+                return state.counter;
             },
             welcome: function(state){
                 return state.welcome;
             }
         }
     })
-
-    
 
     // vue 인스턴스 만들기.
     new Vue({
@@ -119,20 +132,21 @@
         //template: ``,
         methods: {
             increment:function(event){
-                console.log("increment");
-                // store.dispatch("액션명", 값);
+                //this.$data.counter = this.$data.counter + 1;
+                // 버튼을 누르면 store의 action 호출.
+                // store.dispatch("액션명", 액션값);
                 store.dispatch("increment", 10 );
             },
-            decrement: function (event) {
-                console.log("decrement");
-                // store.dispatch("액션명", 값);
+            decrement : function(event){
+                //this.$data.counter = this.$data.counter - 1;
+                // 버튼을 누르면 store의 action 호출.
+                // dispatch("액션명", 호출값);
                 store.dispatch("decrement", -10);
             },
         },
         components: { }, 
         computed: {
             counter: function(){
-                debugger;
                 return store.getters.counter;
             },
             welcome: function(){
