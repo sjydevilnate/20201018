@@ -144,14 +144,19 @@
                 // 1. alert로 "숫자만 입력 가능합니다." 출력하고
                 // 2. power를 빈값으로 초기화
                 // 3. 해당 태그에 focus 주기                 
-                var power = Number(this.$data.user.power);                    
-                if( isNaN(power) ) {
-                    // 문자가 있는 경우. 
-                    window.alert("숫자만 입력 가능합니다.");
-                    this.$data.user.power = "";
-                    this.$refs.myuserpower.focus(); // 태그에 ref="myuserpower" 추가 
+                // var power = Number(this.$data.user.power);                    
+                // if( isNaN(power) ) {
+                //     // 문자가 있는 경우. 
+                //     window.alert("숫자만 입력 가능합니다.");
+                //     this.$data.user.power = "";
+                //     this.$refs.myuserpower.focus(); // 태그에 ref="myuserpower" 추가 
 
-                    return;
+                //     return;
+                // }
+
+                var regex= /^[0-9.]/g;
+                if( !regex.test(this.$data.user.power) ) {
+                    
                 }
 
                 // this.$data.list에서 최대 id 값을 찾기
@@ -163,7 +168,7 @@
                     */
                     return prev.id > next.id ? prev.id: next.id;
                 });
-                
+                debugger;
                 // 추가할 user 객체 만들기 
                 var user = {
                    id: max + 1, 
@@ -180,7 +185,7 @@
 
                 // input 태그 초기화 
                 //this.$data.user = "";
-                Vue.set(this.$data, "user", "");
+                Vue.set(this.$data, "user", {} );
             },
             doUp: function (index) {
                 // power 값을 +100
