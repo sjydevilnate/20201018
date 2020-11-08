@@ -23,7 +23,7 @@
 export default {
     methods: {
         clearTodo: function(){
-            
+            this.$emit("removeAll");
         }
     }
 }

@@ -21,7 +21,7 @@ button {
         <TodoInput v-on:addTodo="addTodo"></TodoInput>
         <TodoList 
             v-bind:propsdata="todoItems" 
-            v-on:removeTodo="removeTodo">
+            v-on:removeTodo ="removeTodo">
         </TodoList>
         <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
     </div>
@@ -30,8 +30,8 @@ button {
 <script>
 // componet import
 import TodoHeader from "@/components/todo/TodoHeader.vue"
-// import TodoInput from "@/components/todo/TodoInput.vue"
-// import TodoList from "@/components/todo/TodoList.vue"
+import TodoInput from "@/components/todo/TodoInput.vue"
+import TodoList from "@/components/todo/TodoList.vue"
 import TodoFooter from "@/components/todo/TodoFooter.vue"
 
 export default {
@@ -39,25 +39,31 @@ export default {
     data: function(){  
         return {
             todoItems : [
-                { id: 1, todo: "영화보기", done: false },
-                { id: 2, todo: "주말 산책", done: true },
-                { id: 3, todo: "ES6 학습", done: false },
-                { id: 4, todo: "잠실 야구장", done: false }
+                "영화보기"   ,
+                "주말 산책"  ,
+                "ES6 학습"   ,
+                "잠실 야구장",
             ]
         }
     },
     methods: {
-        addTodo: function(){ 
+        addTodo: function(todoItem){ 
+            //this.$data.todoItems.pus( todoItem);
+            //this.$data.todoItems[this.$data.todoItems.length ] = todoItem;
+            this.$set(this.$data.todoItems, this.$data.todoItems.length, todoItem);
         },
-        removeTodo: function(){ 
+        removeTodo: function(todoItem, index ){ 
+            this.$data.todoItems.splice(index, 1);
         }, 
         clearAll: function(){
+            //this.$data.todoItems = [];
+            this.$set( this.$data, "todoItems", []);
         }, 
     },
     components: {
         "TodoHeader": TodoHeader,
-        /*"TodoInput": TodoInput,
-        "TodoList": TodoList,*/
+        "TodoInput": TodoInput,
+        "TodoList": TodoList,
         "TodoFooter": TodoFooter
      }, 
 }

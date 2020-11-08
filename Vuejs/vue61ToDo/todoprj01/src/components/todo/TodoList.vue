@@ -63,9 +63,10 @@ export default {
     props: ["propsdata"],
     methods: {
         removeTodo:function(todoItem, index){
-            
+            console.log(todoItem, index);
+            // 부모 이벤트 호출
+            this.$emit("removeTodo", todoItem, index );
         }
     }
-
 }
 </script>

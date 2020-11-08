@@ -131,7 +131,9 @@ export default {
     },
     methods: {
         addTodo: function(){
-
+            this.$emit("addTodo", this.$data.newTodoItem );
+            //this.$data.newTodoItem = null;
+            this.$set( this.$data, "newTodoItem", null);
         }
     }
 }
