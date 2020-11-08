@@ -45,7 +45,9 @@
         ]
 
         작업 순서
-        1. Read 작업
+        1. 페이지가 실행되면 name input 태그에 focus 주기
+            ==> ref 를 사용해야 한다. 
+        2. Read 작업
             ==> 실행시 바인딩할 데이터
             [
                 {id:1, name: "슈퍼맨", power: 100},
@@ -53,26 +55,27 @@
                 {id:3, name: "스파이더맨", power: 500},
                 {id:4, name: "배트맨", power: 30},
             ]
-        2. Delete 작업
+        3. Delete 작업
             ==> 배열에서 삭제 ==> splice(배열의방번호, 개수) 사용.
-        3. Update 작업
+        4. Update 작업
             ==> Up / Down 
             Up   ==> +100 증가 
             Down ==> -50 감소
-        4. Insert 작업
-            ==> "Add" 버튼을 클릭했을 때 추가 
+        5. Insert 작업
+            ==> "Add" 버튼을 클릭했을 때  
             최대 id 값을 구하는 방법. 
-            Object Array 에서 최대값 구하는 방법은 구글 검색을 이용한다.
-            ==> 검색조건: javascript object array max
             방법1. .reduce()
             방법2. .map() 를 사용하는 방법
 
+            Object Array 에서 최대값 구하는 방법은 구글 검색을 이용한다.
+            ==> 검색조건: javascript object array max
 
         개별 작업
-        1. power 에 대한 유효성 검증과 focus 추가
-            power 에 숫자가 아닌 값이 들어오면
+        1. Insert 작업에 power 에 대한 유효성 검증 기능 추가
+            power 에 숫자가 아닌 값이 들어오면 
             1-1. alert로 "숫자만 입력 가능합니다." 출력하고
-            1-2. power input 태그에 focus 주기
+            1-2. power를 빈값으로 초기화
+            1-3. power input 태그에 focus 주기
 
     </pre>
     <div id="app">
@@ -83,9 +86,9 @@
         </div>
         <div>
             <label for="">Power : </label>
-            <input type="text" v-model="user.power">
+            <input type="text" ref="myuserpower" v-model="user.power">
         </div>
-        <button v-on:click="insert">Add</button>
+        <button v-on:click="doIns">Add</button>
         <hr>
         <table>
             <tr>
@@ -135,12 +138,21 @@
         },
         //template: ``,
         methods: {
-            insert: function(event){
+            doIns: function(event){
                 // power에 대한 유효성 검증 & focus 추가
                 // 예를 들어 power 에 숫자가 아닌 값이 들어오면 
                 // 1. alert로 "숫자만 입력 가능합니다." 출력하고
-                // 2. 해당 태그에 focus 주기 
-                
+                // 2. power를 빈값으로 초기화
+                // 3. 해당 태그에 focus 주기                 
+                var power = Number(this.$data.user.power);                    
+                if( isNaN(power) ) {
+                    // 문자가 있는 경우. 
+                    window.alert("숫자만 입력 가능합니다.");
+                    this.$data.user.power = "";
+                    this.$refs.myuserpower.focus(); // 태그에 ref="myuserpower" 추가 
+
+                    return;
+                }
 
                 // this.$data.list에서 최대 id 값을 찾기
                 var max = this.$data.list.reduce( function(prev, next){
