@@ -53,3 +53,43 @@
 </body>
 
 </html>
+
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data : {
+            activeElement : null,
+        },
+        mounted: function(){
+            //myinput1에 focus
+            //vue에선 $refs로 접근
+            this.$refs.myinput1.focus();
+
+            console.log( document.activeElement );
+            this.$data.activeElement = document.activeElement;
+        },
+        updated : function(){
+            console.log( "updated" );
+        },
+        methods : {
+            showLog : function() {
+                //myinput1에 포커스 있으면 myinput2에 포커스 아니면 myinput1에 포커스
+                console.log( this.$refs.myinput1 );
+                console.log( this.$data.activeElement );
+                if( this.$data.activeElement.id == this.$refs.myinput1.id ) {
+                    //vue에선 $refs로 접근
+                    this.$refs.myinput2.focus();
+                }
+                else {
+                    //vue에선 $refs로 접근
+                    this.$refs.myinput1.focus();
+                }
+
+                this.$data.activeElement = document.activeElement;
+            },
+        }
+    });
+</script>

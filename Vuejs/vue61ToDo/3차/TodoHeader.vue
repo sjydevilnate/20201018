@@ -15,5 +15,6 @@ h1 {
 <script>
 export default {
     /* pdtmc^2w */
+    props: []
 };
 </script>

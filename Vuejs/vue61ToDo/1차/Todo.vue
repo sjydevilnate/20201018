@@ -17,10 +17,21 @@ button {
 
 <template>
     <div id="app">
+        <!-- TodoHeader -->
         <TodoHeader></TodoHeader>
+
+        <!-- TodoInput -->
         <TodoInput v-on:addTodo="addTodo"></TodoInput>
-        <TodoList v-bind:propsdata="todoItems" v-on:removeTodo="removeTodo"></TodoList>
-        <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
+
+        <!-- TodoList -->
+        <TodoList
+            v-bind:todoItems="todoItems"
+            v-on:doneToggle="doneToggle"
+            v-on:removeTodo="removeTodo"
+        ></TodoList>
+
+        <!-- TodoFooter -->
+        <TodoFooter v-on:clearAll="clearAll"></TodoFooter>
     </div>
 </template>
 

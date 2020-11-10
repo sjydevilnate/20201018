@@ -21,7 +21,6 @@
     <hr>
 
     <div id="app" class="col-md-10 offset-md-1">
-        <button v-on:click="btnAddClick">추가</button>
         <table id="list" class="table-bordered">
             <thead>
                 <tr class="bg-warning text-white text-center">
@@ -42,6 +41,31 @@
         </table>
     </div>
 
+
+    <script type="text/x-template" id="template1">
+    <div class="col-md-10 offset-md-1">
+        <button v-on:click="btnAddClick">추가</button>
+        <table id="list" class="table-bordered">
+            <thead>
+                <tr class="bg-warning text-white text-center">
+                    <th>번호</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th>주소</th>
+                </tr>
+            </thead>
+            <tbody id="contacts">
+                <tr v-for="(contact , i ) in contacts" v-bind:key="i">
+                    <td>{{i+1}}</td>
+                    <td>{{contact.name}}</td>
+                    <td>{{contact.tel}}</td>
+                    <td>{{contact.address}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </script>
+
 </body>
 
 </html>
@@ -59,14 +83,15 @@
 	            { "no": 91, "name":"소진", "tel":"010-3456-8291", "address":"서진"},
 	        ]
         },
+        template: "#template1",
         methods: {
             btnAddClick: function(event){
                 var aa = {
                     "name": "설현",
-                    "tel": "010-3456-8200", 
+                    "tel": "010-3456-8200",
                     "address": "서현"
                 }
-                Vue.set(this.$data.contacts, this.$data.contacts.length, aa);
+                this.$set(this.$data.contacts, this.$data.contacts.length, aa);
             }
         }
     });

@@ -15,6 +15,11 @@ li {
     background: white;
     border-radius: 5px;
 }
+li.checked {
+    background: #BBB;
+    color: #fff;
+    text-decoration: line-through;
+}
 .checkBtn {
     line-height: 45px;
     color: #62acde;
@@ -40,16 +45,17 @@ li {
     <section>
         <transition-group name="list" tag="ul">
             <li
-                v-for="(todoItem, index) in propsdata"
-                v-bind:key="todoItem"
-                class="shadow"
+                v-for="(todoItem, index) in todoItems"
+                v-bind:key="todoItem.id"
+                v-bind:class="checked(todoItem.done)"
+                v-on:click="doneToggle(todoItem.id, index)"
             >
                 <i class="checkBtn fas fa-check" aria-hidden="true"></i>
-                {{ todoItem }}
+                {{ todoItem.todo }}
                 <span
                     class="removeBtn"
                     type="button"
-                    v-on:click="removeTodo(todoItem, index)"
+                    v-on:click="removeTodo(todoItem.id, index)"
                 >
                     <i class="far fa-trash-alt" aria-hidden="true"></i>
                 </span>
@@ -60,10 +66,15 @@ li {
 
 <script>
 export default {
-    props: ["propsdata"],
+    /* pdtmc^2w */
+    props: ["todoItems"],
     methods: {
-        removeTodo(todoItem, index) {
+        checked: function(done) {
         },
-    },
+        doneToggle: function(id, index) {
+        },
+        removeTodo: function(id, index) {
+        }
+    }
 };
 </script>

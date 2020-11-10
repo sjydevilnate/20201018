@@ -15,16 +15,17 @@
 
 <template>
     <div class="clearAllContainer">
-        <span class="clearAllBtn" v-on:click="clearTodo">Clear All</span>
+        <span class="clearAllBtn" v-on:click="clearAll">Clear All</span>
     </div>
 </template>
 
 <script>
 export default {
     /* pdtmc^2w */
+    props: [],
     methods: {
-        clearTodo() {
-            this.$emit("removeAll");
+        clearAll: function() {
+            this.$emit("clearAll");
         }
     }
 };

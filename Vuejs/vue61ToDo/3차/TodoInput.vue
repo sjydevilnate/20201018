@@ -86,9 +86,9 @@ input:focus {
     <div class="inputBox shadow">
         <input
             type="text"
-            v-model="newTodoItem"
             placeholder="Type what you have to do"
-            v-on:keypress.enter="addTodo"
+            v-model.trim:value="newTodoItem"
+            v-on:keyup.enter="addTodo"
         />
         <span class="addContainer" v-on:click="addTodo">
             <i class="addBtn fas fa-plus" aria-hidden="true"></i>
@@ -124,24 +124,28 @@ input:focus {
 <script>
 export default {
     /* pdtmc^2w */
+    props: [],
     data: function() {
         return {
-            newTodoItem: "",
+            newTodoItem: null,
             showModal: false
         };
     },
     methods: {
         addTodo: function() {
-            if (this.newTodoItem !== "") {
-                var value = this.newTodoItem && this.newTodoItem.trim();
-                this.$emit("addTodo", value);
-                this.clearInput();
+            if (
+                this.$data.newTodoItem &&
+                this.$data.newTodoItem.trim() !== ""
+            ) {
+                // 부모에게 addTodo 이벤트에 값을 담아서 넘기기
+                var newTodoItem = this.$data.newTodoItem.trim();
+                this.$emit("addTodo", newTodoItem);
+
+                // input 태그 초기화
+                this.$set(this.$data, "newTodoItem", "");
             } else {
-                this.showModal = !this.showModal;
+                this.$data.showModal = !this.$data.showModal;
             }
-        },
-        clearInput: function() {
-            this.newTodoItem = "";
         }
     }
 };

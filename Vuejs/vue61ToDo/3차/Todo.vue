@@ -17,10 +17,21 @@ button {
 
 <template>
     <div id="app">
+        <!-- TodoHeader -->
         <TodoHeader></TodoHeader>
+
+        <!-- TodoInput -->
         <TodoInput v-on:addTodo="addTodo"></TodoInput>
-        <TodoList v-bind:propsdata="todoItems" v-on:removeTodo="removeTodo"></TodoList>
-        <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
+
+        <!-- TodoList -->
+        <TodoList
+            v-bind:todoItems="todoItems"
+            v-on:doneToggle="doneToggle"
+            v-on:removeTodo="removeTodo"
+        ></TodoList>
+
+        <!-- TodoFooter -->
+        <TodoFooter v-on:clearAll="clearAll"></TodoFooter>
     </div>
 </template>
 
@@ -31,37 +42,111 @@ import TodoList from "@/components/todo/TodoList.vue";
 import TodoFooter from "@/components/todo/TodoFooter.vue";
 
 export default {
-    data: function(){
+    /* pdtmc^2w */
+    props: [],
+    data: function() {
         return {
-            todoItems: []
+            todoItems: [
+                { id: 1, todo: "영화보기", done: false },
+                { id: 2, todo: "주말 산책", done: true },
+                { id: 3, todo: "ES6 학습", done: false },
+                { id: 4, todo: "잠실 야구장", done: false }
+            ]
         };
     },
+    //template: ``,
     methods: {
-        clearAll: function(){
-            localStorage.clear();
-            this.todoItems = [];
-        },
-        addTodo: function(todoItem) {
-            localStorage.setItem(todoItem, todoItem);
-            this.todoItems.push(todoItem);
-        },
-        removeTodo: function(todoItem, index) {
-            localStorage.removeItem(todoItem);
-            this.todoItems.splice(index, 1);
-        }
-    },
-    created: function() {
-        if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) {
-                this.todoItems.push(localStorage.key(i));
+        addTodo: function(newTodoItem) {
+            // create
+            if (newTodoItem && newTodoItem.trim() !== "") {
+                /* max 를 id 를 찾는방법
+                        1. array.reduce() 사용
+                        2. array.map()과 Math.max()를 사용하는 방법
+                    */
+
+                // 1. array.reduce() 를 사용하여 newId를 구하는 방법
+                var maxObj = null;
+                if (this.$data.todoItems.length === 0) {
+                    maxObj = {
+                        id: 0,
+                        todo: "",
+                        done: false
+                    };
+                } else {
+                    maxObj = this.$data.todoItems.reduce(function(
+                        prevItem,
+                        nextItem
+                    ) {
+                        // 최대 id 값을 갖고있는 item을 찾는다.
+                        return prevItem.id > nextItem.id ? prevItem : nextItem; //
+                    });
+                }
+                console.log(maxObj);
+
+                var newid = maxObj.id + 1;
+
+                // 2. map()과 Math.max()를 사용하여 newId를 구하는 방법
+                var arrIds = this.$data.todoItems.map(function(el) {
+                    return el.id;
+                });
+                newid = Math.max(...arrIds) + 1;
+                /*
+                    this.$data.todoItems[this.$data.todoItems.length] = {
+                       id: newid
+                       todo: this.$data.newTodoItem,
+                       done: false,
+                    };
+                    */
+                this.$set(this.$data.todoItems, this.$data.todoItems.length, {
+                    id: newid,
+                    todo: newTodoItem,
+                    done: false
+                });
             }
+        },
+        doneToggle: function(id, index) {
+            // update
+            // object array 에서 찾는 방법
+            // 1. array.findIndex()을 사용하는 방법
+            // 2. array.filter()을 사용하는 방법
+            index = this.$data.todoItems.findIndex(function(item) {
+                //return item.id === id;
+                if (item.id === id) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            if (index >= 0) {
+                //this.$data.todoItems[index].done = !this.$data.todoItems[index].done;
+                this.$set(
+                    this.$data.todoItems[index],
+                    "done",
+                    !this.$data.todoItems[index].done
+                );
+            }
+        },
+        removeTodo: function(id, index) {
+            // delete: ;
+            // 참조 타입 변수이면 재할당(=== 깊은 복사) 필요.
+            // 방법1: array.splice() 을 사용하는 방법
+            // 방법2: array.map() 을 사용하는 방법
+            this.$data.todoItems.splice(index, 1);
+        },
+        clearAll: function() {
+            // delete
+            //this.$data.todoItems = [];
+            this.$set(this.$data, "todoItems", []);
         }
     },
     components: {
         TodoHeader: TodoHeader,
         TodoInput: TodoInput,
         TodoList: TodoList,
-        TodoFooter: TodoFooter,
-    }
-}
+        TodoFooter: TodoFooter
+    },
+    computed: {},
+    watch: {}
+};
 </script>

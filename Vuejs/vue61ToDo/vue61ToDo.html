@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Mobile Project</title>
+    <title>ToDo Project</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -21,6 +21,7 @@
 
     <xmp>
         Vue-CLI 을 사용하여 ToDo 어플리케이션을 만들어 본다.
+        페이지 129~174를 참고
 
         1. ToDo 앱 요구사항
             1-1. CRUD 코드 구현
@@ -31,16 +32,25 @@
 
 
         2. 프로젝트 생성 작업
-            step 00. npm uninstall -g @vue/cli        # Vue-CLI 전역 설치 삭제
-            step 01. npm install -g @vue/cli --force  # Vue-CLI 전역 설치. 한번만 설치. 
+            step 2-01. Vue-CLI 전역 설치 삭제
+            $ npm uninstall -g @vue/cli
+            
+            
+            step 2-02. Vue-CLI 전역 설치. 한번만 수행. --force 를 사용하면 강제로 덮어쓰게 된다. 
+            $ npm install -g @vue/cli --force  
 
-            step 02. vue -V                      # Vue-CLI 버전 확인
-                Vue CLI v4.5.8 
+
+            step 2-03. vue-cli 버전 확인 
+            $ vue -V
+            Vue CLI v4.5.8 
                 
+                
+            step 2-04. 현재 폴더의 파일 목록 조회 
             $ ls
             1차 2차 3차 snap0093.png snap0096.png snap0100.png vue61ToDo.html
 
-            step 03. vue create todoprj01        # Vue 프로젝트 생성. package.json 생성. 라이브러리 다운로드
+            step 2-05. todoprj01 프로젝트 생성 
+            $ vue create todoprj01        # Vue 프로젝트 생성. package.json 생성. 라이브러리 다운로드
                 Vue CLI v4.5.6 
                 ? Please pick a preset: Manually select features
                 ? Check the features needed for your project: Choose Vue version, Babel, Router, Vuex, Linter
@@ -51,44 +61,44 @@
                 ? Where do you prefer placing config for Babel, ESLint, etc.? In dedicated config files
                 ? Save this as a preset for future projects? No
 
-
+            step 2-06. 현재 폴더의 파일 목록 조회. 프로젝터 폴더(todoprj01) 존재 여부 확인. 
             $ ls
             1차 2차 3차  snap0093.png snap0096.png snap0100.png todoprj01 vue61ToDo.html 
 
-            step 04. cd todoprj01    # 폴더 이동
-            step 04. ls              # 파일 목록 조회. package.json 이 보이면 정상.
-            step 05. npm run serve   # 서버 실행. package.json이 보이는 곳에서 실행해야 됨
+            step 2-07. 생성된 프로젝트 폴더(todoprj01)로 이동
+            $ cd todoprj01
             
-            step06, step07 생략 가능
-            step 06. vue add router              # Vue-Router 플러그인 추가
-            step 07. npm install vuex --save     # Veux 추가
+            
+            step 2-08. 현재 폴더의 파일 목록 조회. package.json 이 보이면 정상.
+            $ ls
+            babel.config.js  node_modules  package.json  package-lock.json  public  README.md  src
+            
+            
+            step 2-09. npm run serve   # 서버 실행. package.json이 보이는 곳에서 실행해야 됨
+            
+            
+            step 2-10, step 2-11은 생략 가능
+            step 2-10. vue add router              # Vue-Router 플러그인 추가
+            step 2-11. npm install vuex --save     # Veux 추가
 
-            step 08. todoprj01/package.json 수정
+            step 2-12. todoprj01/package.json 수정
                 "scripts": {
                     "serve": "vue-cli-service serve --open --port 4000", /* --open: 브라우저로 열기, --port 4000 : 포트 지정 */
                     "build": "vue-cli-service build",
                     "lint": "vue-cli-service lint"
                 },
 
-            step 09. ls             # package.json 존재하는지 확인 
+            step 2-13. 현재 폴더의 파일 목록 조회. package.json 존재하는지 확인 
+            $ ls
 
-            step 10. npm run serve  # package.json 이 보이는 곳에서 서버 실행.
+            step 2-14. 서버 실행. package.json 이 있는 폴더에서 실행 해야 됨. 
+            $ npm run serve  
 
-            step 11. npm run build  # dist/ 폴더가 생성됨. dist/ 폴더안의 배포할 파일들이 생성됨. 
+            step 2-15. 배포할 파일들이 생성됨. 빌드가 완료되면  dist/ 폴더가 생성됨. 
+            $ npm run build  
 
-            step 12. npm run lint   # 코드 표준화 검사
-
-            step 13. 코드 포맷팅 Prettier 설정
-                todoprj01/.prettierrc 파일을 만들고 파일 안에 아래 코드를 추가하시오. 
-
-                {
-                    "singleQuote": false, /* 문자열은 큰따옴표 사용 */
-                    "semi":true, /* 문장 끝에 ; 을 사용 */
-                    "useTabs":false, /* 탭 대신에 스페이스 사용 */
-                    "tabWidth":4 /* 탭을 누르면 4칸 들여쓰기 */
-                }
-
-                
+            step 2-16. 코드 표준화 수행 
+            $ npm run lint
 
         3. 프로젝트 초기 설정. page 133~134
             프로젝트의 폴더 구조
@@ -197,41 +207,280 @@
                 vue61ToDo/1차/Todo.vue 내용을 복사하여 붙여넣기
 
 
-        8. 컴포넌트 2차 구현:  추가
+        8. 컴포넌트 2차 구현: < script></script> 추가
             step 8-1. src/components/todo/TodoHeader.vue  에 추가
-             
+            < script>
+            export default {
+                /* pdtmc^2w */
+                props: []
+            };
+            </script>
+
             
             step 8-2. rc/components/todo/TodoInput.vue   에 추가
+            < script>
+            export default {
+                /* pdtmc^2w */
+                props: [],
+                data: function() {
+                    return {
+                        newTodoItem: null,
+                        showModal: false
+                    };
+                },
+                methods: {
+                    addTodo: function() {
+                    }
+                }
+            };
+            </script>
             
             
             step 8-3. src/components/todo/TodoList.vue   에 추가
-            
+            < script>
+            export default {
+                /* pdtmc^2w */
+                props: ["todoItems"],
+                methods: {
+                    checked: function(done) {
+                    },
+                    doneToggle: function(id, index) {
+                    },
+                    removeTodo: function(id, index) {
+                    }
+                }
+            };
+            </script>
+
             
             step 8-4. src/components/todo/TodoFooter.vue  에 추가
+            < script>
+            export default {
+                /* pdtmc^2w */
+                props: [],
+                methods: {
+                    clearAll: function() {
+                    }
+                }
+            };
+            </script>
             
             
             step 8-5. src/views/Todo.vue  에 추가
-            
+            < script>
+            import TodoHeader from "@/components/todo/TodoHeader.vue";
+            import TodoInput  from "@/components/todo/TodoInput.vue";
+            import TodoList   from "@/components/todo/TodoList.vue";
+            import TodoFooter from "@/components/todo/TodoFooter.vue";
+
+            export default {
+                /* pdtmc^2w */
+                components : {
+                    TodoHeader: TodoHeader,
+                    TodoInput: TodoInput,
+                    TodoList: TodoList,
+                    TodoFooter: TodoFooter,
+                }
+            }
+            </script>
             
 
         9.  컴포넌트 3차 구현: 상태 관리 구현
             props 와 이벤트를 이용하여 상태 관리 구현
 
             step 9-1. src/components/todo/TodoHeader.vue 에 추가
-             
+            < script>
+            export default {
+                /* pdtmc^2w */
+                props: []
+            };
+            </script>
+            
             
             step 9-2. rc/components/todo/TodoInput.vue  에 추가
-            
+            < script>
+            export default {
+                /* pdtmc^2w */
+                props: [],
+                data: function() {
+                    return {
+                        newTodoItem: null,
+                        showModal: false
+                    };
+                },
+                methods: {
+                    addTodo: function() {
+                        if (
+                            this.$data.newTodoItem &&
+                            this.$data.newTodoItem.trim() !== ""
+                        ) {
+                            // 부모에게 addTodo 이벤트에 값을 담아서 넘기기
+                            var newTodoItem = this.$data.newTodoItem.trim();
+                            this.$emit("addTodo", newTodoItem);
+
+                            // input 태그 초기화
+                            this.$set(this.$data, "newTodoItem", "");
+                        } else {
+                            this.$data.showModal = !this.$data.showModal;
+                        }
+                    }
+                }
+            };
+            </script>
+
             
             step 9-3. src/components/todo/TodoList.vue   에 추가
+            < script>
+            export default {
+                /* pdtmc^2w */
+                props: ["todoItems"],
+                methods: {
+                    checked: function(done) {
+                        if (done) {
+                            return "checked"; // 또는 {checked: true}
+                        } else {
+                            return null; // 또는 {checked: false}
+                        }
+                    },
+                    doneToggle: function(id, index) {
+                        this.$emit("doneToggle", id, index);
+                    },
+                    removeTodo: function(id, index) {
+                        this.$emit("removeTodo", id, index);
+                    }
+                }
+            };
+            </script>
             
             
             step 9-4. src/components/todo/TodoFooter.vue  에 추가
+            < script>
+            export default {
+                /* pdtmc^2w */
+                props: [],
+                methods: {
+                    clearAll: function() {
+                        this.$emit("clearAll");
+                    }
+                }
+            };
+            </script>
             
             
             step 9-5. src/views/Todo.vue  에 추가
+            < script>
+            import TodoHeader from "@/components/todo/TodoHeader.vue";
+            import TodoInput from "@/components/todo/TodoInput.vue";
+            import TodoList from "@/components/todo/TodoList.vue";
+            import TodoFooter from "@/components/todo/TodoFooter.vue";
 
-            
+            export default {
+                /* pdtmc^2w */
+                props: [],
+                data: function() {
+                    return {
+                        todoItems: [
+                            { id: 1, todo: "영화보기", done: false },
+                            { id: 2, todo: "주말 산책", done: true },
+                            { id: 3, todo: "ES6 학습", done: false },
+                            { id: 4, todo: "잠실 야구장", done: false }
+                        ]
+                    };
+                },
+                //template: ``,
+                methods: {
+                    addTodo: function(newTodoItem) {
+                        // create
+                        if (newTodoItem && newTodoItem.trim() !== "") {
+                            /* max 를 id 를 찾는방법
+                                    1. array.reduce() 사용
+                                    2. array.map()과 Math.max()를 사용하는 방법
+                                */
+
+                            // 1. array.reduce() 를 사용하여 newId를 구하는 방법
+                            var maxObj = null;
+                            if (this.$data.todoItems.length === 0) {
+                                maxObj = {
+                                    id: 0,
+                                    todo: "",
+                                    done: false
+                                };
+                            } else {
+                                maxObj = this.$data.todoItems.reduce(function(
+                                    prevItem,
+                                    nextItem
+                                ) {
+                                    // 최대 id 값을 갖고있는 item을 찾는다.
+                                    return prevItem.id > nextItem.id ? prevItem : nextItem; //
+                                });
+                            }
+                            console.log(maxObj);
+
+                            var newid = maxObj.id + 1;
+
+                            // 2. map()과 Math.max()를 사용하여 newId를 구하는 방법
+                            var arrIds = this.$data.todoItems.map(function(el) {
+                                return el.id;
+                            });
+                            newid = Math.max(...arrIds) + 1;
+                            /*
+                                this.$data.todoItems[this.$data.todoItems.length] = {
+                                   id: newid
+                                   todo: this.$data.newTodoItem,
+                                   done: false,
+                                };
+                                */
+                            this.$set(this.$data.todoItems, this.$data.todoItems.length, {
+                                id: newid,
+                                todo: newTodoItem,
+                                done: false
+                            });
+                        }
+                    },
+                    doneToggle: function(id, index) {
+                        // update
+                        // object array 에서 찾는 방법
+                        // 1. array.findIndex()을 사용하는 방법
+                        // 2. array.filter()을 사용하는 방법
+                        index = this.$data.todoItems.findIndex(function(item) {
+                            //return item.id === id;
+                            if (item.id === id) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        });
+
+                        if (index >= 0) {
+                            //this.$data.todoItems[index].done = !this.$data.todoItems[index].done;
+                            this.$set(
+                                this.$data.todoItems[index],
+                                "done",
+                                !this.$data.todoItems[index].done
+                            );
+                        }
+                    },
+                    removeTodo: function(id, index) {
+                        // delete: ;
+                        // 참조 타입 변수이면 재할당(=== 깊은 복사) 필요.
+                        // 방법1: array.splice() 을 사용하는 방법
+                        // 방법2: array.map() 을 사용하는 방법
+                        this.$data.todoItems.splice(index, 1);
+                    },
+                    clearAll: function() {
+                        // delete
+                        //this.$data.todoItems = [];
+                        this.$set(this.$data, "todoItems", []);
+                    }
+                },
+                components: {
+                    TodoHeader: TodoHeader,
+                    TodoInput: TodoInput,
+                    TodoList: TodoList,
+                    TodoFooter: TodoFooter
+                }
+            };
+            </script>
 
 
         10. 프로젝트 4차 개선. 
@@ -274,7 +523,6 @@
                     <router-view />
                 </div>
 
-        [참고] 페이지 129~174
     </xmp>
 
 </body>

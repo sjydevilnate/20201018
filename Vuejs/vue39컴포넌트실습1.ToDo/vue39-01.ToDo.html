@@ -192,15 +192,15 @@
 
 <body>
     <pre style="text-align:left;">
-    
+
     선 학습 필요 사항:
-        array.reduce() 사용법 
-        array.map() 사용법 
-        array.filter() 사용법 
-        array.findIndex() 사용법 
-        array.splice() 사용법 
-        
-    todoItems 는 아래와 같다고 가정한다 
+        array.reduce() 사용법
+        array.map() 사용법
+        array.filter() 사용법
+        array.findIndex() 사용법
+        array.splice() 사용법
+
+    todoItems 는 아래와 같다고 가정한다
     todoItems = [
         { id: 1, todo: "영화보기", done: false },
         { id: 2, todo: "주말 산책", done: true },
@@ -210,24 +210,32 @@
 
     기능 추가
         1. add 할 때 this.$data.todoItems 가 빈 배열인 경우 기능 추가
-        2. add 후에 input 태그의 입력 값 지우기. 
+        2. add 후에 input 태그의 입력 값 지우기.
         3. 토글 할 때 findIndex 로 못 찾는 경우에 대한 방어 코드 추가.
-        4. input 태그에 빈 문자일이 입력 되는 경우는 배열에 추가되지 않게. 
+        4. input 태그에 빈 문자일이 입력 되는 경우는 배열에 추가되지 않게.
         5. todo 타이틀 바꾸기. 기능 누락. 추가 필요
 
     주의 사항.
-        1. checked 메서드에서 class에 빈 문자열로 설정하면 안됨. null 로 설정하면 됨. 
-        
+        1. checked 메서드에서 class에 빈 문자열로 설정하면 안됨. null 로 설정하면 됨.
+
+    작업 순서
+        1. "vue29-01.ToDo.qs05-12.html"을 복사하여 붙여 넣고 작업한다.
+        2. "vue29-01.ToDo.qs05-12.html"을 컴포넌트로 만들어 본다.
     </pre>
     <hr>
 
-    <div id="todolistapp">
+    <div id="app">
 
+        <!-- TodoHeader -->
         <header>
             <h1>TODO it!</h1>
         </header>
+
+        <!-- TodoInput -->
         <div class="inputBox shadow">
-            <input type="text" v-model.trim:value="newTodoItem" placeholder="Type what you have to do"
+            <input type="text"
+                placeholder="Type what you have to do"
+                v-model.trim:value="newTodoItem"
                 v-on:keyup.enter="addTodo" />
             <span class="addContainer" v-on:click="addTodo">
                 <i class="addBtn fas fa-plus" aria-hidden="true"></i>
@@ -251,24 +259,48 @@
             </div>
         </div>
 
+        <!-- TodoList -->
         <section>
             <transition-group name="list" tag="ul">
-                <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem.id"
-                    v-bind:class="checked(todoItem.done)" v-on:click="doneToggle(todoItem.id)">
+                <li v-for="(todoItem, index) in todoItems"
+                    v-bind:key="todoItem.id"
+                    v-bind:class="checked(todoItem.done)"
+                    v-on:click="doneToggle(todoItem.id, index)">
                     <i class="checkBtn fas fa-check" aria-hidden="true"></i>
                     {{ todoItem.todo }}
-                    <span class="removeBtn" type="button" v-on:click="removeTodo(todoItem.id, index)">
+                    <span class="removeBtn"
+                          type="button"
+                          v-on:click="removeTodo(todoItem.id, index)">
                         <i class="far fa-trash-alt" aria-hidden="true"></i>
                     </span>
                 </li>
             </transition-group>
         </section>
 
+        <!-- TodoFooter -->
         <div class="clearAllContainer">
-            <span class="clearAllBtn" v-on:click="clearTodo">Clear All</span>
+            <span class="clearAllBtn" v-on:click="clearAll">Clear All</span>
         </div>
 
     </div>
+
+    <script type="text/x-template" id="template1">
+    <div id="app">
+
+        <!-- TodoHeader -->
+        <TodoHeader></TodoHeader>
+
+        <!-- TodoInput -->
+        <TodoInput v-on:addTodo="addTodo"></TodoInput>
+
+        <!-- TodoList -->
+        <TodoList v-bind:todoItems="todoItems" v-on:doneToggle="doneToggle" v-on:removeTodo="removeTodo"></TodoList>
+
+        <!-- TodoFooter -->
+        <TodoFooter v-on:clearAll="clearAll"></TodoFooter>
+
+    </div>
+    </script>
 
 </body>
 
@@ -276,15 +308,166 @@
 
 <!-- vue 플러그인 임포트   -->
 <script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"> /* JSX를 자바스크립트로 변환 */</script>
+<script src="https://unpkg.com/vuex@3.3.0/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> /* axios 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vue-router@3.1.6/dist/vue-router.js"> /* vue 라우터 플러그인 임포트 */</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> /* jQuery library */</script>
 <script>
-    //import axios from "axios";
-    
+    var TodoHeader = {
+        /* pdtmc^2w */
+        props: [] ,
+        data: function() {
+            return { }
+        },
+        template: `
+            <header>
+                <h1>TODO it!</h1>
+            </header>
+        `,
+        methods: {
+
+        },
+        components: { },
+        computed: {
+
+        },
+        watch: {
+
+        },
+    };
+
+    var TodoInput = {
+        /* pdtmc^2w */
+        props: [] ,
+        data: function() {
+            return {
+                newTodoItem:null,
+                showModal: false,
+            }
+        },
+        template: `
+            <div class="inputBox shadow">
+                <input type="text" placeholder="Type what you have to do"
+                    v-model.trim:value="newTodoItem"
+                    v-on:keyup.enter="addTodo" />
+                <span class="addContainer" v-on:click="addTodo">
+                    <i class="addBtn fas fa-plus" aria-hidden="true"></i>
+                </span>
+
+                <div class="modal-mask" v-on:keyup.esc="$emit('close')" v-if="showModal" v-on:close="showModal = false">
+                    <div class="modal-wrapper">
+                        <div class="modal-container">
+                            <div class="modal-header">
+                                <h3 slot="header">경고</h3>
+                            </div>
+
+                            <div class="modal-footer">
+                                <span slot="footer" v-on:click="showModal = false">
+                                    할 일을 입력하세요.
+                                    <i class="closeModalBtn fas fa-times" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `,
+        methods: {
+            addTodo: function(){
+                if (this.$data.newTodoItem && this.$data.newTodoItem.trim()!== "") {
+                    // 부모에게 addTodo 이벤트에 값을 담아서 넘기기
+                    var newTodoItem = this.$data.newTodoItem.trim();
+                    this.$emit("addTodo", newTodoItem);
+
+                    // input 태그 초기화
+                    this.$set(this.$data, "newTodoItem", "");
+                } else {
+                    this.$data.showModal = !this.$data.showModal;
+                }
+            },
+        },
+    };
+
+    var TodoList = {
+        /* pdtmc^2w */
+        props: ["todoItems"] ,
+        data: function() {
+            return { }
+        },
+        template: `
+            <section>
+                <transition-group name="list" tag="ul">
+                    <li v-for="(todoItem, index) in todoItems"
+                        v-bind:key="todoItem.id"
+                        v-bind:class="checked(todoItem.done)"
+                        v-on:click="doneToggle(todoItem.id, index)"
+                    >
+                        <i class="checkBtn fas fa-check" aria-hidden="true"></i>
+                        {{ todoItem.todo }}
+                        <span class="removeBtn"
+                              type="button"
+                              v-on:click="removeTodo(todoItem.id, index)">
+                            <i class="far fa-trash-alt" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                </transition-group>
+            </section>
+        `,
+        methods: {
+            checked: function(done){
+                if( done ) {
+                    return "checked";// 또는 {checked: true}
+                }
+                else {
+                    return null; // 또는 {checked: false}
+                }
+            },
+            doneToggle: function(id, index){
+                this.$emit("doneToggle", id, index);
+            },
+            removeTodo: function(id, index){
+                this.$emit("removeTodo", id, index);
+            },
+        },
+        components: { },
+        computed: {
+
+        },
+        watch: {
+
+        },
+    };
+
+    var TodoFooter = {
+        /* pdtmc^2w */
+        props: [] ,
+        data: function() {
+            return { }
+        },
+        template: `
+            <div class="clearAllContainer">
+                <span class="clearAllBtn" v-on:click="clearAll">Clear All</span>
+            </div>
+        `,
+        methods: {
+            clearAll: function(){
+                this.$emit("clearAll");
+            },
+        },
+        components: { },
+        computed: {
+
+        },
+        watch: {
+
+        },
+    };
+
     new Vue({
         /* edtmc^2w */
-        el: "#todolistapp",
+        el: "#app",
         data: {
-            newTodoItem: null,
-            showModal: null, 
             todoItems: [
                 { id: 1, todo: "영화보기", done: false },
                 { id: 2, todo: "주말 산책", done: true },
@@ -292,24 +475,16 @@
                 { id: 4, todo: "잠실 야구장", done: false }
             ],
         },
-        //template: ``,
+        template: "#template1",
         methods: {
-            checked : function(done){
-                if( done ) {
-                    return "checked";// 또는 {checked: true}
-                }
-                else {
-                    return null; // 또는 {checked: false}
-                }                
-            },
-            addTodo: function(event){
-                // create 
-                if( this.$data.newTodoItem && this.$data.newTodoItem.trim() !== "" ){
+            addTodo: function(newTodoItem){
+                // create
+                if( newTodoItem && newTodoItem.trim() !== "" ){
                     /* max 를 id 를 찾는방법
                         1. array.reduce() 사용
                         2. array.map()과 Math.max()를 사용하는 방법
                     */
-                    
+
                     // 1. array.reduce() 를 사용하여 newId를 구하는 방법
                     var maxObj = null;
                     if( this.$data.todoItems.length === 0) {
@@ -321,15 +496,15 @@
                     }
                     else {
                         maxObj = this.$data.todoItems.reduce(function (prevItem, nextItem) {
-                            // 최대 id 값을 갖고있는 item을 찾는다. 
-                            return prevItem.id > nextItem.id ? prevItem : nextItem; // 
+                            // 최대 id 값을 갖고있는 item을 찾는다.
+                            return prevItem.id > nextItem.id ? prevItem : nextItem; //
                         });
                     }
                     console.log(maxObj);
 
                     var newid = maxObj.id + 1;
-                    
-                    
+
+
 
                     // 2. map()과 Math.max()를 사용하여 newId를 구하는 방법
                     var arrIds = this.$data.todoItems.map( function(el){
@@ -338,26 +513,23 @@
                     var newId  = Math.max(...arrIds) + 1;
                     /*
                     this.$data.todoItems[this.$data.todoItems.length] = {
-                       id: newid 
-                       todo: this.$data.newTodoItem, 
+                       id: newid
+                       todo: this.$data.newTodoItem,
                        done: false,
                     };
                     */
-                    Vue.set(
-                        this.$data.todoItems, 
-                        this.$data.todoItems.length, 
+                    this.$set(
+                        this.$data.todoItems,
+                        this.$data.todoItems.length,
                         {
                             id: newid,
-                            todo: this.$data.newTodoItem, 
+                            todo: newTodoItem,
                             done: false,
-                        } 
+                        }
                     );
-
-                    //  input 태그 초기화 
-                    Vue.set(this.$data, "newTodoItem", "");
                 }
             },
-            doneToggle: function(id) {
+            doneToggle: function(id, index) {
                 // update
                 // object array 에서 찾는 방법
                 // 1. array.findIndex()을 사용하는 방법
@@ -369,12 +541,12 @@
                     }
                     else {
                         return false;
-                    } 
+                    }
                 });
 
                 if( index >= 0 ){
                     //this.$data.todoItems[index].done = !this.$data.todoItems[index].done;
-                    Vue.set(this.$data.todoItems[index], "done", !this.$data.todoItems[index].done);
+                    this.$set(this.$data.todoItems[index], "done", !this.$data.todoItems[index].done);
                 }
             },
             removeTodo: function(id, index) {
@@ -384,25 +556,32 @@
                 // 방법2: array.map() 을 사용하는 방법
                 this.$data.todoItems.splice(index, 1);
             },
-            clearTodo: function(event){
+            clearAll: function(){
                 // delete
                 //this.$data.todoItems = [];
-                Vue.set(this.$data, "todoItems", []);
+                this.$set(this.$data, "todoItems", []);
             },
         },
-        components: { }, 
+        components: {
+            "TodoHeader": TodoHeader,
+            "TodoInput": TodoInput,
+            "TodoList": TodoList,
+            "TodoFooter": TodoFooter,
+        },
         computed: {
-    
+
         },
         watch: {
-    
+
+        },
+        created: function() {
+            console.log("created");
         },
         mounted: function() {
             console.log("mounted");
         },
         updated: function() {
             console.log("updated");
-            console.log(this.$data.todoItems);
         },
     });
 </script>

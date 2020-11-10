@@ -86,9 +86,9 @@ input:focus {
     <div class="inputBox shadow">
         <input
             type="text"
-            v-model="newTodoItem"
             placeholder="Type what you have to do"
-            v-on:keypress.enter="addTodo"
+            v-model.trim:value="newTodoItem"
+            v-on:keyup.enter="addTodo"
         />
         <span class="addContainer" v-on:click="addTodo">
             <i class="addBtn fas fa-plus" aria-hidden="true"></i>
@@ -123,18 +123,17 @@ input:focus {
 
 <script>
 export default {
-    data() {
+    /* pdtmc^2w */
+    props: [],
+    data: function() {
         return {
-            newTodoItem: "",
+            newTodoItem: null,
             showModal: false
         };
     },
     methods: {
-        addTodo() {
-        },
-        clearInput() {
+        addTodo: function() {
         }
-    },
-    components: {}
+    }
 };
 </script>
