@@ -23,12 +23,13 @@
         Vue-CLI 을 사용하여 ToDo 어플리케이션을 만들어 본다.
         페이지 129~174를 참고
 
-        1. ToDo 앱 요구사항
-            1-1. CRUD 코드 구현
-            1-2. 컴포넌트 구조화 적용
-            1-3. 컴포넌트 상태 관리 적용:
-                1-3-1. 이벤트와 props 사용해서
-                1-3-2. Veux 사용해서
+        1. 앱 요구사항
+            1-1. vue-cli 로 프로젝트 생성 
+            1-2. ToDo CRUD 코드 구현
+            1-3. ToDo 컴포넌트 구조화 적용
+            1-4. ToDo 컴포넌트 상태 관리 적용:
+                1-4-1. 이벤트와 props 사용해서
+                1-4-2. Veux 사용해서
 
 
         2. 프로젝트 생성 작업
@@ -74,7 +75,8 @@
             babel.config.js  node_modules  package.json  package-lock.json  public  README.md  src
             
             
-            step 2-09. npm run serve   # 서버 실행. package.json이 보이는 곳에서 실행해야 됨
+            step 2-09. 서버 실행. package.json이 보이는 곳에서 실행해야 됨
+            $ npm run serve
             
             
             step 2-10, step 2-11은 생략 가능
@@ -83,7 +85,7 @@
 
             step 2-12. todoprj01/package.json 수정
                 "scripts": {
-                    "serve": "vue-cli-service serve --open --port 4000", /* --open: 브라우저로 열기, --port 4000 : 포트 지정 */
+                    "serve": "vue-cli-service serve --open --port 4000", /* --open: 브라우저로 열기, --port 4000 : 4000 포트로 서버 실행 */
                     "build": "vue-cli-service build",
                     "lint": "vue-cli-service lint"
                 },
@@ -100,9 +102,13 @@
             step 2-16. 코드 표준화 수행 
             $ npm run lint
 
+
+
+
         3. 프로젝트 초기 설정. page 133~134
             프로젝트의 폴더 구조
             └─ public/index.html 을 열고 아래의 코드를 추가
+            
             3-1. viewport 설정
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -152,20 +158,20 @@
             │       │       └─ TodoList.vue    # 파일 생성. Vue component에 해당됨  
             │       │       └─ TodoFooter.vue  # 파일 생성. Vue component에 해당됨  
             │       └─ views                    
-            │           └─ Todo.vue             # 파일 생성. Vue 인스턴스에 해당됨
+            │           └─ Todo.vue            # 파일 생성. Vue 인스턴스에 해당됨
             ├─ babel.config.js
             ├─ package.json
             └─ README.md
             
-            Todo        : Todo View .                        
+            Todo.vue        : Todo View .
                           ~/src/view/Todo.vue
-            TodoHeader  : 애플리케이션 이름 표시.            
+            TodoHeader.vue  : 애플리케이션 이름 표시.
                           ~/src/components/todo/TodoHeader.vue
-            TodoInput   : 할 일 입력 및 추가.                
+            TodoInput.vue   : 할 일 입력
                           ~/src/components/todo/TodoInput.vue
-            TodoList    : 할 일 목록 표시 및 아이템 삭제.    
+            TodoList.vue    : 할 일 목록 표시 및 아이템 삭제.
                           ~/src/components/todo/TodoList.vue
-            TodoFooter  : 할 일 모두 삭제.                   
+            TodoFooter.vue  : 할 일 모두 삭제.
                           ~/src/components/todo/TodoFooter.vue
 
 
@@ -181,7 +187,6 @@
                 </div>
                 
             step 6-2. ~/src/router/index.js 수정
-
                 아래 코드 추가 
                 {
                     path: "/todo",
