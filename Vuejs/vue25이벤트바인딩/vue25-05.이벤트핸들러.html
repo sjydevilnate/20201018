@@ -82,5 +82,43 @@
         window.alert( '인라인 이벤트 핸들러 btn_onmouseup' );
     }
 
+
+    // 고전 이벤트 핸들러 설정
+    var btn = document.getElementById('btn'); // 1. 태그 찾기 : getElementById, getElementByClassName
+    btn.onclick= function(event) { // 2. 이벤트 핸들러를 등록
+        window.alert( '고전 이벤트 핸들러 클릭' );
+
+    };
+
+    //  엘리먼트 여러개가 리턴. 배열
+    var classes = document.getElementsByClassName('고전이벤트핸들러'); // 1. 태그 찾기 : getElementById, getElementByClassName
+    Array.from(classes).forEach(function(item, index){
+        console.log(index, item);
+
+        // 2. 이벤트 핸들러를 등록
+        item.onclick = function (event) {
+            window.alert('고전 이벤트 핸들러 클릭');
+
+            // click 이벤트 리슨너 제거
+            this.onclick = null;
+
+            // 이벤트 취소
+            return false;
+        };
+    });
+
+
+
+    // 표준 이벤트 핸들러 설정
+    // p 태그에 click 이벤트 달기
+    var names = document.getElementsByName('표준이벤트핸들러');// 1. 태그 찾기 : getElementById, getElementByClassName
+    Array.from(names).forEach(function(item, index){
+        console.log(index, item);
+        // 2. 이벤트 핸들러를 등록
+        item.addEventListener('click', function (event) {
+            window.alert( '표준 이벤트 핸들러 클릭' );
+        });
+    });
+
 </script>
 

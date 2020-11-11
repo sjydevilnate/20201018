@@ -83,8 +83,69 @@
         </div>
     </div>
 
+    <script type="text/x-template" id="handler-template">
+    <div>
+        <div>
+            <p>가능한 방법</p>
+            <button v-on:click="handlerClick"              >handlerClick              </button>
+            <button v-on:click="handlerClick(this        )">handlerClick(this)        </button>
+            <br />
+            <br />
+            <p>불가능한 방법</p>
+            <button v-on:click="handlerClick(event       )">handlerClick(event)       </button>
+            <button v-on:click="handlerClick(window.event)">handlerClick(window.event)</button>
+            <button v-on:click="handlerClick(window      )">handlerClick(window)      </button>
+        </div>
+
+        <hr>
+
+        <div>
+            <span style="background-color:red;"  v-on:click="clickWithParam(event)">      </span>
+            <span style="background-color:red;"  v-on:click="clickWithParam(event, 123)">      </span>
+            <span style="background-color:red;"  v-on:click="clickWithParam(event, null, 'abc')"></span>
+            <span style="background-color:red;"  v-on:click="clickWithParam(event, 123, 'abc')"></span>
+            <br/>
+            <span style="background-color:blue;" v-on:click="clickWithNoParam(event)"> </span>
+            <span style="background-color:blue;" v-on:click="clickWithNoParam(event)" data-param1="123"> </span>
+            <span style="background-color:blue;" v-on:click="clickWithNoParam(event)" data-param2="abc"> </span>
+            <span style="background-color:blue;" v-on:click="clickWithNoParam(event)" data-param1="123"  data-param2="abc"> </span>
+        </div>
+    </div>
+    </script>
 </body>
 
 </html>
 
 <!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+
+        },
+        template: "#handler-template",
+        methods: {
+            handlerClick: function(event, param1, param2){
+                console.log("handlerClick", event, param1, param2);
+            },
+            clickWithParam: function(event, param1, param2) {
+                console.log("clickWithParam :: ", "param1>>", param1, ", param2>>", param2);
+            },
+            clickWithNoParam: function(event) {
+                var param1 =  event.target.dataset.param1;
+                var param2 =  event.target.dataset.param2;
+                console.log("clickWithNoParam :: ", "param1>>", param1, ", param2>>", param2);
+            }
+        },
+        //components: { },
+        computed: {
+
+        },
+        watch: {
+
+        },
+    });
+</script>
+

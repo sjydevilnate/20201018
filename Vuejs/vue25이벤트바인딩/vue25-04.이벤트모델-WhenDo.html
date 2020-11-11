@@ -7,6 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
 
+    <script>
+        window.onload = function () {
+            alert('onload 실행');
+            console.log('onload 실행');
+        };
+        window.onbeforeunload = function () {
+            alert( 'onbeforeunload 실행'); // Blocked alert('onbeforeunload 실행') during beforeunload.
+            console.log('onbeforeunload 실행');
+            return false;
+        };
+    </script>
+    <script>
+        console.log('head 에서');
+    </script>
 </head>
 
 <body>
@@ -23,10 +37,11 @@
 
     <hr>
 
-    
+    <script> console.log('body 안에 p 앞에'); </script>
     <p> body 안에...</p>
-    
+    <script> console.log('/body 직전, p 뒤에'); </script>
     <a href="http://www.naver.com">naver</a>
 </body>
 
-</html>
+</html>
+<script> console.log('html 밖에서'); </script>
