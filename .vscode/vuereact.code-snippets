@@ -90,7 +90,7 @@
     "React Class Component": {
         "prefix": "rcc",
         "body": [
-            "//import React, { Component } from 'react'",
+            "//import React from 'react'",
             "//import ReactDOM from 'react-dom'",
             "",
             "console.log(React)",
