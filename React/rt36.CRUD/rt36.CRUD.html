@@ -152,7 +152,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr className="">
+                <tr class="">
                     <td>1</td>
                     <td>슈퍼맨</td>
                     <td>100</td>
@@ -162,21 +162,21 @@
                         <button>Power Down</button>
                         <button>Edit</button></td>
                 </tr>
-                <tr className="strong">
+                <tr class="strong">
                     <td>2</td>
                     <td>아쿠아맨</td>
                     <td>300</td>
                     <td><button>Del</button> <button>Power Up</button> <button>Power Down</button>
                         <button>Edit</button></td>
                 </tr>
-                <tr className="strong">
+                <tr class="strong">
                     <td>3</td>
                     <td>스파이더맨</td>
                     <td>500</td>
                     <td><button>Del</button> <button>Power Up</button> <button>Power Down</button>
                         <button>Edit</button></td>
                 </tr>
-                <tr className="">
+                <tr class="">
                     <td>4</td>
                     <td>배트맨</td>
                     <td>30</td>
@@ -257,10 +257,33 @@
                     ...this.state,
                     list: mans,
                 })
-
             },
-            doEdit(paramMan){
+            doEdit(newitem){
+                debugger;
+                let mans = this.state.list.map((item, index) => {
+                    if (item.id === newitem.id) {
+                        return newitem;
+                    }
+                    else {
+                        return item
+                    }
+                }) 
+                this.setState({
+                    ...this.state,
+                    list: mans,
+                })
+            },
+            doInst(newitem){
+                debugger;
+                // this.state.list에서 max(id) 찾기
+                const maxid = 0;
+                newitem.id = maxid;
 
+                const newlist = [...this.state.list, newitem]
+                this.setState({
+                    ...state,
+                    list: newlist
+                })
             }
         }
         constructor(props) {
@@ -271,26 +294,13 @@
             this.func.doDel  = this.func.doDel.bind(this)
             this.func.doEdit = this.func.doEdit.bind(this)
         }
-        componentDidMount() {
-            // 마운트 완료 후에  : 페이지 load 될 때 한번
-        }
-        componentDidUpdate(prevProps, prevState) {
-            // 업데이트 완료 후에 : 여러번, state 가 변경될 때마다
-        }
-        componentWillUnmount() {
-            // 언마운트 완료 후에 : 페이지 unload 될 때 한번
-        }
-        handler = (event)=>{
-            // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
-            console.log(event.target)//
-        }
         render() {
             return (
                 <div>
                     <CrudInput {...this.func}
                     >
                     </CrudInput>
-                    <CrudList {...this.state}  
+                    <CrudList {...this.state}
                               {...this.func}
                     >
                     </CrudList>
@@ -399,7 +409,7 @@
                 name: this.refUserName.current.value,
                 power: Number(this.refUserPower.current.value),
             }
-            this.props.doEdit(newitem); // CrudApp.func.doEdit()
+            this.props.doEdit(newitem) // CrudApp.func.doEdit() 호출
 
             //this.state.isEditMode 바꾼다.
             this.setState({
@@ -472,24 +482,45 @@
         constructor(props) {
             super()
             // this 바인딩
+            // ref 만들기
+            this.refUserName = React.createRef()
+            this.refUserPower = React.createRef()
         }
-        handler = (event)=>{
+        doIns = (event)=>{
             // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
             console.log(event.target)//
+            
+            // ref 를 사용하여 현재 입력된 값을 가져온다.
+            //const name = this.refUserName.current.value
+            //const power = Number(this.refUserPower.current.value)
+            const newitem = {
+                id: null,
+                name: this.refUserName.current.value,
+                power: Number(this.refUserPower.current.value),
+            }
+            this.props.doIns(newitem) // CrudApp.func.doIns(newitem) 호출
         }
         render() {
             return (
                 <div>
                     <h1>Creat Read Update Delete</h1>
                     <div>
-                        <label htmlFor="">Name : </label>
-                        <input type="text" />
+                        <label htmlFor="">Name : </label>                        
+                        <input type="text"
+                            name="name"
+                            ref={this.refUserName}
+                            defaultValue={item.name}
+                        />
                     </div>
                     <div>
-                        <label htmlFor="">Power : </label>
-                        <input type="text" />
+                        <label htmlFor="">Power : </label>                        
+                        <input type="text"
+                            name="power"
+                            ref={this.refUserPower}
+                            defaultValue={item.power}
+                        />
                     </div>
-                    <button>Add</button>
+                    <button onClick={this.doIns}>Add</button>
                     <hr/>
                 </div>
             )
