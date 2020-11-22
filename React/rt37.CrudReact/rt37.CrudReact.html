@@ -26,8 +26,10 @@
         1. 프로젝트 관련 작업
             step 1. 프로젝트 생성
                 $ npx create-react-app crudreact  # 프로젝트명은 소문자로 만들어야 함.
+                $ ls                # crudreact 보이는지 확인
                 $ cd crudreact
-                $ npm run start
+                $ ls                # package.json 보이는지 확인
+                $ npm run start     # package.json 보이면 서버 실행
 
 
             step 2. 프로젝트 root에 .env 파일을 만들고 아래 코드를 추가 한다.
@@ -44,6 +46,7 @@
 
             step 5. install React redux
                 $ npm install react-redux --save
+                $ npm install redux-thunk --save
                 $ npm install --save-dev redux-devtools
 
 

@@ -273,15 +273,27 @@
                     list: mans,
                 })
             },
-            doInst(newitem){
+            doIns(newitem){
                 debugger;
                 // this.state.list에서 max(id) 찾기
-                const maxid = 0;
-                newitem.id = maxid;
+                if( this.state.list.length>0) {
+                    const maxobj = this.state.list.reduce(function (prev, next) {
+                        /*
+                        최대 id 값을 리턴한다.
+                        prev = { id: 1, name: "슈퍼맨", power: 100 };
+                        next = { id: 2, name: "아쿠아맨", power: 300 };
+                        */
+                        return prev.id > next.id ? prev : next;
+                    });
+                    newitem.id = maxobj.id + 1;
+                }
+                else {
+                    newitem.id = 1;
+                }
 
                 const newlist = [...this.state.list, newitem]
                 this.setState({
-                    ...state,
+                    ...this.state,
                     list: newlist
                 })
             }
@@ -293,6 +305,7 @@
             this.func.doDown = this.func.doDown.bind(this)
             this.func.doDel  = this.func.doDel.bind(this)
             this.func.doEdit = this.func.doEdit.bind(this)
+            this.func.doIns = this.func.doIns.bind(this)
         }
         render() {
             return (
@@ -470,10 +483,7 @@
             }
         }
     }
-    
-    //export default CrudListItem
-
-    
+        
     class CrudInput extends React.Component {
     
         state = {
@@ -509,7 +519,6 @@
                         <input type="text"
                             name="name"
                             ref={this.refUserName}
-                            defaultValue={item.name}
                         />
                     </div>
                     <div>
@@ -517,7 +526,6 @@
                         <input type="text"
                             name="power"
                             ref={this.refUserPower}
-                            defaultValue={item.power}
                         />
                     </div>
                     <button onClick={this.doIns}>Add</button>
