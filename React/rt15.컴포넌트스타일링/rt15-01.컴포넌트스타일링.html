@@ -69,7 +69,9 @@
     class CompStyle extends React.Component {
     
         state = {
-            style1: {           
+        }
+        style = {
+           style1 : {
                 display: "inline-block",
                 backgroundColor: "gray",
                 border: "10px solid black",
@@ -79,7 +81,7 @@
         }
         render() {
             return (
-                <div style={this.state.style1}>
+                <div style={this.style.style1}>
                     
                 </div>
             )
