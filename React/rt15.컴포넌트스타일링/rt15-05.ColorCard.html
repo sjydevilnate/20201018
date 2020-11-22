@@ -85,7 +85,25 @@
                 </div>
                 ,
                 document.getElementById("app")
-            )       
+            )   
+        
+        3. className 설정을 컴포넌트의 인라인스타일로 바꾼다. 
+            className="card"
+            ==>
+            styleSquare = {
+                height: "150px",
+                backgroundColor: "#ff6663",
+            }
+
+            className="label"
+            ==>
+            styleLabel = {
+                fontFamily: "sans-serif",
+                fontWeight: "bold",
+                padding: "13px",
+                margin: "0",
+                textAlign: "center",
+            }
              
         3. 상태값(state), 속성값(props), 메서드1(func1), 메서드2(func2) 가 있다가 했을 때
            위의 3개 모두를 속성으로 넘기려면 어떻게 하면될까요? 
@@ -138,12 +156,21 @@
     console.log(React)
     console.log(ReactDOM)
     
-    class Label extends React.Component {    
+    class Label extends React.Component {  
+        state = {
+            styleLabel : {
+                fontFamily: "sans-serif",
+                fontWeight: "bold",
+                padding: "13px",
+                margin: "0",
+                textAlign: "center",
+            }
+        }  
         render() {
-            debugger;
             const { style1, color } = this.props;
+            const newstyle = { ...this.state.styleLabel, ...style1 }
             return (
-                <div className="label" style={style1}>
+                <div style={newstyle}>
                     {this.props.color}
                 </div>
             )
@@ -151,10 +178,19 @@
     }
         
     class Square extends React.Component {
+        state = {
+            styleSqure : {
+                height: "150px",
+                backgroundColor: "#ff6663",
+            }
+        }
         render() {
-            let style = { backgroundColor: this.props.color }
+            const newstyle = { 
+                ...this.state.styleSqure, 
+                backgroundColor: this.props.color,
+            }
             return (
-                <div className="square" style={style}>
+                <div style={newstyle}>
                 </div>
             )
         }
@@ -164,7 +200,16 @@
     
         state ={
             style1: {
-                fontSize:"35pt",
+                fontSize:"25pt",
+            },
+            styleCard: {
+                display: "inline-block",
+                height: "200px",
+                width: "150px",
+                padding: "0",
+                margin: "10px",
+                backgroundColor: "#ffffff",
+                filter: "drop-shadow(0px 0px 5px #666666)",
             }
         }
         render() {
@@ -175,13 +220,16 @@
             newprops = {                
                 style1: {
                     fontSize:"35pt",
-                },                
+                },   
+                styleCard: {
+                    ...
+                },            
                 color:"#ff6663",
             }
             */
             const newprops = {...this.state, ...this.props };
             return (
-                <div className="card">
+                <div style={this.state.styleCard}>
                     <Square {...newprops}></Square>
                     <Label {...newprops}></Label>                    
                 </div>
