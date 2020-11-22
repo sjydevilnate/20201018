@@ -81,9 +81,8 @@
           counter 데이터 속성과 콜백 메서드가 props로 전달되도록 설정한다. 
         -->
         <ComponentChild 
-            counter={this.state.counter}
-            addCounter={this.func.addCounter} 
-            subCounter={this.func.subCounter}
+                        {...this.state}
+                        {...this.func}
         >
         </ComponentChild>
     </div>
@@ -175,9 +174,8 @@
                     <p></p>
 
                     <ComponentChild
-                        counter={this.state.counter}
-                        addCounter={this.func.addCounter}
-                        subCounter={this.func.subCounter}
+                        {...this.state}
+                        {...this.func}
                     >
                     </ComponentChild>
                 </div>
