@@ -60,9 +60,12 @@
                         font-weight : bold ;
                     }
                 */
+                style = {
+                    styleText : {...중략},
+                }
                 render(){
                     return(
-                        <div style={this.styleText}>
+                        <div style={this.style.styleText}>
                             {this.props.count}
                         </div>
                     )
@@ -92,8 +95,10 @@
                 line-height : 3px
             }
             */
-            styleBackground = {...중략}
-            styleButton = {...중략}
+            style = {
+                styleBackground : {...중략},
+                styleButton : {...중략},
+            }
             increase = (e)=> {
                 // 이벤트 핸들러는 constructor에서 this bind 처리한다.
                 console.log(this);//
@@ -101,9 +106,9 @@
             }
             render(){
                 return(
-                    <div style={this.styleBackground}>
+                    <div style={this.style.styleBackground}>
                         <CounterLabel count={this.state.count}></CounterLabel>
-                        <button style={this.styleButton} onClick={this.increase}>+</button>
+                        <button style={this.style.styleButton} onClick={this.increase}>+</button>
                     </div>
                 );
             }
@@ -133,7 +138,109 @@
 
 <!-- react 플러그인 include   -->
 <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">/* JSX를 자바스크립트로 변환 */</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js"> /* import { React} from "react"; */</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">/* import { ReactDOM } from "react-dom"; */</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.js"> /* import {Redux} from "redux"; */ </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/7.1.3/react-redux.js">/* import {ReactRedux} from "react-redux"; */</script>
+<script type="text/babel">
+    //import React from 'react'
+    //import ReactDOM from 'react-dom'
+    
+    console.log(React)
+    console.log(ReactDOM)
+    
+    class CounterLabel extends React.Component {
+        style = {
+            styleText : {
+                fontSize : "72px",
+                fontFamily : "sans-serif",
+                color: "#333333",
+                fontWeight : "bold",
+            }
+        }
+        render() {
+            return (
+                <div style={this.style.styleText}>
+                    {this.props.count}
+                </div>
+            )
+        }
+    }
+    
+    class CounterContainer extends React.Component {
+    
+        state = {
+            count: 0,
+            num: null,
+            val: null,
+        }
+        style = {
+            styleBackground: { 
 
+            },
+            styleButton: { 
 
+            }
+        }
+        constructor(props) {
+            super()
+            // this 바인딩
+        }
+        componentDidMount() {
+            // 마운트 완료 후에  : 페이지 load 될 때 한번
+        }
+        componentDidUpdate(prevProps, prevState) {
+            // 업데이트 완료 후에 : 여러번, state 가 변경될 때마다
+        }
+        increase = (event)=>{
+            // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
+            debugger;
+            console.log(event.target)//
+            /*
+            {
+                ...this.state,
+                count: this.state.count+1
+            }
+            <==> 
+            {
+                count: 0,
+                num: null,
+                val: null,
+                count: this.state.count+1,
+            }
 
-
+            */
+           
+            if( event.shiftKey === true ){
+                // 10 더하기
+                this.setState({
+                    ...this.state,
+                    count: this.state.count + 10
+                })
+            }
+            else {
+                // 1 더하기 
+                this.setState({
+                    ...this.state,
+                    count: this.state.count + 1
+                })
+            }
+        }
+        render() {
+            return (
+            <div style={this.style.styleBackground}>
+                <CounterLabel {...this.state} {...this.props} ></CounterLabel>
+                <button style={this.style.styleButton} onClick={this.increase}>+</button>
+            </div>
+            )
+        }
+    }
+    ReactDOM.render(
+        <CounterContainer></CounterContainer>
+        ,
+        document.getElementById("app")
+    )
+    
+
+</script>
