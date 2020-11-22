@@ -146,7 +146,8 @@
     // 화면에 컴코넌트 붙이기
     function renderApp( store,action) {
         ReactDOM.render(
-            <App store={store} action={action} ></App>,
+            <App store={store} action={action} ></App>
+            ,
             document.getElementById("app")
         )
     }
