@@ -51,10 +51,8 @@
 
 <!-- react 플러그인 include   -->
 <!-- 주의: 사이트를 배포할 때는 'development.js'를 'production.min.js'로 대체하세요. -->
-<script
-    src='https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js'> /* import { React} from 'react'; */</script>
-<script
-    src='https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js'>/* import { ReactDOM } from 'react-dom'; */</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js'> /* import { React} from 'react'; */</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js'>/* import { ReactDOM } from 'react-dom'; */</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js'>/* JSX를 자바스크립트로 변환 */</script>
 <script type='text/babel'>
     //import React, { Component } from 'react'
@@ -68,7 +66,9 @@
             style1: {
                 /* font-size: 80pt; */
                 fontSize: "80pt",
-            }
+            },
+            hms: null,
+            timer: null,
         }
         z2(val) {
             /* 오전인 경우 숫자앞에 0 붙이기 */
@@ -80,32 +80,41 @@
             // 0011 --> 11
             return str.substr(str.length - 2, 2);
         }
+        componentDidMount(){
+            // 타이머 생성.            
+            this.timer = window.setInterval(
+                () => {
+                    
+                    const d = new Date();
+                    let h = d.getHours();
+                    let m = d.getMinutes();
+                    let s = d.getSeconds();
+
+                    h = this.z2(h); // 2자리 만들기 
+                    m = this.z2(m); // 2자리 만들기
+                    s = this.z2(s); // 2자리 만들기
+
+                    this.setState({
+                        //hms: `${ h } : ${ m } : ${ s }`1
+                        hms: h+":" + m +":" + s
+                    })
+                },
+                1000
+            )
+        }
 
         render() {
-            const d = new Date();
-            let h = d.getHours();
-            let m = d.getMinutes();
-            let s = d.getSeconds();
-
-            h = this.z2(h); // 2자리 만들기 
-            m = this.z2(m); // 2자리 만들기
-            s = this.z2(s); // 2자리 만들기
-
             return (
                 <div style={this.state.style1}>
-                    {h}:{m}:{s}
+                    {this.state.hms}
                 </div>
             )
         }
     }
 
-    window.setInterval(
-        function () {
-            ReactDOM.render(
-                <ElectronClock></ElectronClock>, document.getElementById("app")
-            )
-        },
-        1000
+    ReactDOM.render(
+        <ElectronClock></ElectronClock>, 
+        document.getElementById("app")
     )
 
 </script>
