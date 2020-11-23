@@ -19,37 +19,79 @@
 </head>
 <body>
     <xmp>
-        CRUD 방법을 학습한다.
-        [
-            {id:1, name: "슈퍼맨", power: 100},
-            {id:2, name: "아쿠아맨", power: 300},
-            {id:3, name: "스파이더맨", power: 500},
-            {id:4, name: "배트맨", power: 30},
-        ]
+        리액트에서 CRUD 방법을 학습한다.
 
-        Object Array 에서 최대값 구하는 방법은 구글 검색을 이용한다.
-            ==> 검색조건: javascript object array max
+        CRUD 학습을 위해서 아래 사항에 대해서 미리 학습한다.
+            1. array.map() 사용법
+            2. array.reduce() 사용법
+            3. array.filter() 사용법
+            
+        테스트 기본 데이터
+            const array = [
+                {id:1, name: "슈퍼맨", power: 100},
+                {id:2, name: "아쿠아맨", power: 300},
+                {id:3, name: "스파이더맨", power: 500},
+                {id:4, name: "배트맨", power: 30},
+            ]
         
+            array 에서 최대값 id 찾기
+                Object Array 에서 최대값 구하는 방법은 구글 검색을 이용한다.
+                ==> 검색조건: javascript object array max
+            
+                방법 1. reduce() 메서드 사용.
+                    var maxObj = array.reduce( function(prev, next){
+                        return prev.id > next.id ? prev:  next  // 최대값 id가 있는 객체
+                        return prev.id < next.id ? prev:  next  // 최소값 id가 있는 객체
+                    })
+                    var newid  = maxObj.id + 1
 
-        선학습 사항
-            방법1. .map() 를 사용하는 방법
-            방법2. .reduce() 를 사용하는 방법
-            방법3. .filter() 를 사용하는 방법
+                방법 2. map()과 Math.max()를 사용하는 방법
+                    var arrIds = array.map( function(el){
+                        return el.id
+                    })
+                    var newid  = Math.max(...arrIds) + 1
         
             
         작업 순서 
-        1. CrudApp 컴포넌트 만들기
-            constructor(props){
-                super()
-                // this 바인드 
-                this.func.insert  = this.func.insert.bind(this)  
-                this.func.doUp   = this.func.doUp.bind(this)
-                this.func.doDown = this.func.doDown.bind(this)
-                this.func.doDel  = this.func.doDel.bind(this)
-                this.func.doEdit = this.func.doEdit.bind(this)
+        
+        1. CrudInput 컴포넌트 만들기
+            state = {
+                /* CrudInput 에서만 사용될  상태값 */
+                user: {
+                    name: "",
+                    power: 0,
+                },
+            }
+            
+        2. CrudList 컴포넌트 만들기
+            "rt07-09.JSX.반복문.html"를 참고하여 코드를 완성하시오. 
+            
+            power가 300이상인 사람은 글자색을 red로 bold스타일로 출력하세요.
+            예시) 
+            render() {
+                const items = this.props.items;
+                const arrs = items.map( function(item, index){
+                    return ( 
+                        <li key={index}>{item.id}</li>
+                    )
+                })
+                return (
+                    <div>
+                        {arrs}
+                    </div>
+                )
+            }
+        
+        3. CrudApp 컴포넌트 만들기
+        
+            state = {
+                /* 컴포넌트간 공유 데이터 */
+                list: [
+                ],
             }
             func = {
-                insert(man){
+                /* 하위 컴포넌트로 전돨될 메서드 */
+                doIns(item){
                     // ...생략
                 },
                 doUp(id){
@@ -65,6 +107,15 @@
                     // ...생략
                 },
             }
+            constructor(props){
+                super()
+                // this 바인드
+                this.func.doUp   = this.func.doUp.bind(this)
+                this.func.doDown = this.func.doDown.bind(this)
+                this.func.doDel  = this.func.doDel.bind(this)
+                this.func.doEdit = this.func.doEdit.bind(this)
+                this.func.doIns  = this.func.doIns.bind(this)
+            }
             render(){
                 return (
                     <CrudInut {...this.state} {...this.func}>
@@ -74,31 +125,30 @@
                 )
             }
             
-        2. ReactDOM 사용하여 화면 붙이기
+        4. ReactDOM 사용하여 화면 붙이기
             ReactDOM.render( <CrudApp></CrudApp>, document.getElementById("app") )
 
-        3. CrudList 컴포넌트 만들기
 
-        4. CrudListItem 컴포넌트 만들기
-            4-1. 편집여부를 확인하기 위한 상태값(state) 만들기
+        5. CrudListItem 컴포넌트 만들기
+            5-1. 편집여부를 확인하기 위한 상태값(state) 만들기
                 state = {
                     isEditMode: false
                 }
 
-            4-2. 데이터 표시용 JSX
+            5-2. formView: 데이터 표시용 JSX
             <tr key={item.id} className={"strong"}>
                     <td>{item.id}</td>
                     <td>{item.name}</td>
                     <td>{item.power}</td>
                     <td>
+                        <button onClick={this.doDel}>Del</button>
                         <button onClick={this.doUp}>Power Up</button>
                         <button onClick={this.doDown}>Power Down</button>
                         <button onClick={this.doEdit}>Edit</button>
-                        <button onClick={this.doDel}>Del</button>
                     </td>
             </tr>
         
-            4-3. 데이터 편집용 JSX
+            5-3. formEdit:  데이터 편집용 JSX
             <tr key={item.id} className={"strong"}>
                     <td>{item.id}</td>
                     <td>
@@ -123,8 +173,6 @@
                         <button onClick={this.doSave}>Save</button>
                     </td>
             </tr> 
-            
-        5. CrudInput 컴포넌트 만들기
         
     </xmp>
     <hr>
@@ -176,7 +224,7 @@
                     <td><button>Del</button> <button>Power Up</button> <button>Power Down</button>
                         <button>Edit</button></td>
                 </tr>
-                <tr class="">
+                <tr class="strong">
                     <td>4</td>
                     <td>배트맨</td>
                     <td>30</td>
@@ -207,8 +255,6 @@
     class CrudApp extends React.Component {
      
         state = {
-            user: {
-            },
             list: [
                 { id: 1, name: "슈퍼맨", power: 100 },
                 { id: 2, name: "아쿠아맨", power: 300 },
@@ -218,66 +264,81 @@
         }
         func = {
             doUp(id){
-                // 100씩 증가 
-                let mans = this.state.list.filter( (item, index)=>{
-                    if( item.id == id) {
-                        return item.power = Number(item.power) + 100 ;
+                //100씩 증가
+                let items = this.state.list.filter( (item,index)=>{
+                    if( item.id === id ){
+                        item.power = Number(item.power) + 100
                     }
                     
-                    return item;
+                    return item
                 })
                 this.setState({
                     ...this.state,
-                    list : mans,
+                    list: items
                 })
             },
             doDown(id){
-                // 50씩 감소 
-                let mans = this.state.list.filter((item, index) => {
-                    if (item.id == id) {
-                        return item.power = Number(item.power) - 50;
+                //50씩 감소
+                let items = this.state.list.filter( (item,index)=>{
+                    if( item.id === id ){
+                        item.power = Number(item.power) - 50
                     }
-
-                    return item;
+                    return item
                 })
                 this.setState({
                     ...this.state,
-                    list: mans,
+                    list: items
                 })
 
             },
             doDel(id){
                 // 배열에서 삭제 <==> 해당되는 id 값을 제외한 배열 찾기
-                let mans = this.state.list.filter((item, index) => {
-                    if (item.id !== id) {
-                        return item;
-                    }
-                })
-                this.setState({
-                    ...this.state,
-                    list: mans,
-                })
+                let r = window.confirm("정말로 삭제 하시겠습니까?")
+                if( r ) {
+                    let items = this.state.list.filter( (item,index)=>{
+                        return item.id !== id
+                    })
+                    this.setState({
+                        ...this.state,
+                        list: items
+                    })
+                }
             },
             doEdit(newitem){
-                debugger;
-                let mans = this.state.list.map((item, index) => {
+                let items = this.state.list.map( (item,index)=>{
                     if (item.id === newitem.id) {
                         return newitem;
                     }
                     else {
                         return item
                     }
-                }) 
+                })
                 this.setState({
                     ...this.state,
-                    list: mans,
+                    list: items
                 })
             },
             doIns(newitem){
-                debugger;
-                // this.state.list에서 max(id) 찾기
+                // newitem 를 this.state.list 에 추가하기
+                
+                /*
+                this.state.list에서 id 최대값 찾기
+                max(id)를 찾는 방법
+                방법 1. reduce() 메서드 사용.
+                    var maxObj = array.reduce( function(prev, next){
+                        return prev.id > next.id ? prev:  next  // 최대값 id가 있는 객체
+                        return prev.id < next.id ? prev:  next  // 최소값 id가 있는 객체
+                    })
+                    var newId  = maxObj.id + 1
+                방법 2. map()과 Math.max()를 사용하는 방법
+                    var arrIds = array.map( function(el){
+                        return el.id
+                    })
+                    var newId  = Math.max(...arrIds) + 1
+                */
+                
                 if( this.state.list.length>0) {
-                    const maxobj = this.state.list.reduce(function (prev, next) {
+                    const maxitem = this.state.list.reduce(function (prev, next) {
                         /*
                         최대 id 값을 리턴한다.
                         prev = { id: 1, name: "슈퍼맨", power: 100 };
@@ -285,12 +346,13 @@
                         */
                         return prev.id > next.id ? prev : next;
                     });
-                    newitem.id = maxobj.id + 1;
+                    newitem.id = maxitem.id + 1;
                 }
                 else {
                     newitem.id = 1;
                 }
 
+                // 신규 리스트 생성 :  push() 나 스프레드 연산자 활용해서
                 const newlist = [...this.state.list, newitem]
                 this.setState({
                     ...this.state,
@@ -310,12 +372,10 @@
         render() {
             return (
                 <div>
-                    <CrudInput {...this.func}
-                    >
+                    <CrudInput {...this.state} {...this.func}>
                     </CrudInput>
-                    <CrudList {...this.state}
-                              {...this.func}
-                    >
+                    <hr/>
+                    <CrudList {...this.state} {...this.func}>
                     </CrudList>
                 </div>
             )
@@ -324,34 +384,17 @@
     
     class CrudList extends React.Component {
     
-        static defaultProps = {  /*  props의 디폴트 값 설정 */  } 
-        static propsTypes = {  /* props의 프로퍼티 타입 설정 */ } 
-        state = {
-    
-        }
-        constructor(props) {
-            super()
-            // this 바인딩
-        }
-        componentDidMount() {
-            // 마운트 완료 후에  : 페이지 load 될 때 한번
-        }
-        componentDidUpdate(prevProps, prevState) {
-            // 업데이트 완료 후에 : 여러번, state 가 변경될 때마다
-        }
-        componentWillUnmount() {
-            // 언마운트 완료 후에 : 페이지 unload 될 때 한번
-        }
-        handler = (event)=>{
-            // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
-            console.log(event.target)//
-        }
         render() {
-            // CrudApp의 state에는 list 와 user state가 있다. 
-            const {list,user} = this.props 
+            
+            const list = this.props.list // CrudApp.state.list 
             const arrs = list.map( (item, index)=>{
+                /* item = {id: 1, name:"슈퍼맨", power: 100 }, */
                 return (
-                    <CrudListItem item={item} key={index} {...this.props}>
+                    <CrudListItem 
+                        key={index} 
+                        item={item} 
+                        {...this.props}
+                    >
                     </CrudListItem>
                 )
             })
@@ -388,31 +431,44 @@
         }
         doDel = (event)=>{
             // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
-            console.log(event.target)//
+            console.log(event.target)
+            
             // CrudApp.func.doDel() 메서드 호출
             const item = this.props.item; // CrudList.item
-            this.props.doDel(item.id); // CrudApp.func.doDel()
+            this.props.doDel(item.id); // this.props.doDel = CrudApp.func.doDel
         }
         doUp = (event) => {
+            // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
+            console.log(event.target)
+            
             // CrudApp.func.doUp() 메서드 호출
             const item = this.props.item; // CrudList.item
-            this.props.doUp( item.id ); // CrudApp.func.doUp()
+            this.props.doUp( item.id ); // this.props.doUp = CrudApp.func.doUp
         }
         doDown = (event) => {
+            // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
+            console.log(event.target)
+            
             // CrudApp.func.doDown() 메서드 호출
             const item = this.props.item;// CrudList.item
-            this.props.doDown(item.id); // CrudApp.func.doDown()
+            this.props.doDown(item.id); // this.props.doDown = CrudApp.func.doDown()
         }
         doEdit = (event) => {
-            const item = this.props.item;// CrudList.item           
+            // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
+            console.log(event.target)
+            
             //this.state.isEditMode 바꾼다.
-            this.setState({
-                ...this.state,
-                isEditMode: !this.state.isEditMode
+            this.setState( (prevState, prop)=>{
+                return {
+                    isEditMode: !prevState.isEditMode
+                }
             })
         }
         doSave = (event)=>{
-            const item = this.props.item;// CrudList.item
+            // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
+            console.log(event.target)
+            
+            const item = this.props.item // CrudList.item
 
             // ref 를 사용하여 현재 입력된 값을 가져온다.
             //const name = this.refUserName.current.value
@@ -422,20 +478,25 @@
                 name: this.refUserName.current.value,
                 power: Number(this.refUserPower.current.value),
             }
+
             this.props.doEdit(newitem) // CrudApp.func.doEdit() 호출
 
             //this.state.isEditMode 바꾼다.
-            this.setState({
-                ...this.state,
-                isEditMode: !this.state.isEditMode
+            this.setState( (prevState, prop)=>{
+                return {
+                    isEditMode: !prevState.isEditMode
+                }
             })
         }
         render() {
-            const {item} = this.props
+            const item = this.props.item
+
+            // power가 300이상인 사람은 글자색을 red로 bold스타일로 출력
+            const strong = item && item.power>=300 ? "strong":"";
 
             // 화면 표시
             const formView = (
-                <tr className="">
+                <tr key={item.id} className={strong}>
                     <td>{item.id}</td>
                     <td>{item.name}</td>
                     <td>{item.power}</td>
@@ -450,7 +511,7 @@
 
             // 화면 수정
             const formEdit = (
-                <tr className="">
+                <tr key={item.id} className={strong}>
                     <td>{item.id}</td>
                     <td>
                         <input type="text" 
@@ -467,7 +528,6 @@
                         />
                     </td>
                     <td>
-                        <button onClick={this.doDel}>Del</button>
                         <button onClick={this.doUp}>Power Up</button>
                         <button onClick={this.doDown}>Power Down</button>
                         <button onClick={this.doSave}>Save</button>
@@ -475,7 +535,7 @@
                 </tr>
             )
 
-            if( this.state.isEditMode === true){
+            if( this.state.isEditMode ){
                 return formEdit
             }
             else {
@@ -483,15 +543,13 @@
             }
         }
     }
-        
+
     class CrudInput extends React.Component {
     
-        state = {
-    
-        }
         constructor(props) {
             super()
             // this 바인딩
+            
             // ref 만들기
             this.refUserName = React.createRef()
             this.refUserPower = React.createRef()
@@ -499,6 +557,27 @@
         doIns = (event)=>{
             // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
             console.log(event.target)//
+
+            // 유효성 검사: 생략
+            if(this.refUserName.current.value.trim() === ''){
+                alert('이름을 입력하세요')
+                this.refUserName.current.focus()
+                event.preventDefault()
+                return false
+            }
+            if(this.refUserName.current.value.trim() === ''){
+                alert('파워를 입력하세요')
+                this.refUserPower.current.focus()
+                event.preventDefault()
+                return false
+            }
+            if( isNaN( Number(this.refUserPower.current.value) ) ){
+                alert('파워에 숫자를 입력하세요')
+                this.refUserPower.current.value=""
+                this.refUserPower.current.focus()
+                event.preventDefault()
+                return false
+            }
             
             // ref 를 사용하여 현재 입력된 값을 가져온다.
             //const name = this.refUserName.current.value
@@ -508,28 +587,35 @@
                 name: this.refUserName.current.value,
                 power: Number(this.refUserPower.current.value),
             }
+
+            // 부모(CrudApp)에게 값을 넘긴다.
             this.props.doIns(newitem) // CrudApp.func.doIns(newitem) 호출
+
+            // 초기화 방법1
+            this.refUserName.current.value = ""
+            this.refUserPower.current.value = 0
         }
         render() {
             return (
                 <div>
                     <h1>Creat Read Update Delete</h1>
                     <div>
-                        <label htmlFor="">Name : </label>                        
+                        <label htmlFor="">Name : </label>
                         <input type="text"
                             name="name"
                             ref={this.refUserName}
+                            defaultValue={""}
                         />
                     </div>
                     <div>
-                        <label htmlFor="">Power : </label>                        
+                        <label htmlFor="">Power : </label>
                         <input type="text"
                             name="power"
                             ref={this.refUserPower}
+                            defaultValue={0}
                         />
                     </div>
                     <button onClick={this.doIns}>Add</button>
-                    <hr/>
                 </div>
             )
         }

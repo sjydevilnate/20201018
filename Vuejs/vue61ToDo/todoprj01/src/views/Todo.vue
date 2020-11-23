@@ -57,45 +57,46 @@ export default {
     methods: {
         addTodo: function(newTodoItem) {
             // create
+            debugger;
             if (newTodoItem && newTodoItem.trim() !== "") {
                 /* max 를 id 를 찾는방법
                         1. array.reduce() 사용
                         2. array.map()과 Math.max()를 사용하는 방법
                     */
 
-                // 1. array.reduce() 를 사용하여 newId를 구하는 방법
+                // 방법 1. array.reduce() 를 사용하여 newId를 구하는 방법
                 var maxObj = null;
-                if (this.$data.todoItems.length === 0) {
+                if (this.$data.todoItems.length > 0) {
+                    maxObj = this.$data.todoItems.reduce( ( prevItem, nextItem )=>{
+                        // 최대 id 값을 갖고있는 item을 찾는다.
+                        return prevItem.id > nextItem.id ? prevItem : nextItem; //
+                    });
+                } else {
                     maxObj = {
                         id: 0,
                         todo: "",
                         done: false
                     };
-                } else {
-                    maxObj = this.$data.todoItems.reduce(function(
-                        prevItem,
-                        nextItem
-                    ) {
-                        // 최대 id 값을 갖고있는 item을 찾는다.
-                        return prevItem.id > nextItem.id ? prevItem : nextItem; //
-                    });
                 }
                 console.log(maxObj);
 
                 var newid = maxObj.id + 1;
 
-                // 2. map()과 Math.max()를 사용하여 newId를 구하는 방법
+                /*
+                // 방법2. map()과 Math.max()를 사용하여 newId를 구하는 방법
                 var arrIds = this.$data.todoItems.map(function(el) {
                     return el.id;
                 });
                 newid = Math.max(...arrIds) + 1;
+                */
+
                 /*
                     this.$data.todoItems[this.$data.todoItems.length] = {
                        id: newid
                        todo: this.$data.newTodoItem,
                        done: false,
                     };
-                    */
+                */                
                 this.$set(this.$data.todoItems, this.$data.todoItems.length, {
                     id: newid,
                     todo: newTodoItem,
