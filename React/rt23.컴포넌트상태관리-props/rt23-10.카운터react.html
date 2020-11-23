@@ -42,6 +42,90 @@
 
 <!-- react 플러그인 include   -->
 <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+<script type="text/babel">
+    console.log(React);
+    console.log(React.Component);
+    console.log(ReactDOM);
 
+    class LightningCounter extends React.Component {
+        state = {
+            strikes: 0
+        }
+        componentDidMount() {
+            window.setInterval(this.timerTick, 1000); // Call a method on the mixin
+        }
+        timerTick = (params)=>{
+            console.log(this.state.strikes);
 
-
+            this.setState({
+                strikes: this.state.strikes + 100
+            });
+        }
+        render() {
+            var styleH1 = {
+                color: '#66FFFF',
+                fontSize: '50px',
+            };
+            return (
+                <h1 style={styleH1}>{this.state.strikes}</h1>
+            );
+        }
+    };
+
+    class LightningContainer extends React.Component {
+
+        render() {
+
+            var styleCommon = {
+                margin: '0px',
+                padding: '0px',
+                fontFamily: 'sans-serif',
+                color: 'white',
+            };
+            var styleDiv = {
+                width: '250px',
+                backgroundColor: 'black',
+                padding: '40px',
+                borderRadius: '10px',
+                textAlign: 'center',
+                    ...styleCommon
+            };
+            var styleText = {
+                emphasis : {
+                    fontSize : '38px',
+                    ...styleCommon,
+                },
+                small : {
+                    fontSize : '17px',
+                    opacity: '0.5',
+                    ...styleCommon
+                },
+                smallEmphasis : {
+                    ...styleCommon
+                }
+
+            };
+
+            return (
+                <div style={styleDiv}>
+                    <LightningCounter/>
+                    <h2 style={styleText.smallEmphasis}>번개</h2>
+                    <h2 style={styleText.emphasis}>강조</h2>
+                    <p style={styleText.small}>since you loaded this example</p>
+                </div>
+            );
+        }
+    };
+
+    ReactDOM.render(
+        <div>
+            <LightningContainer/>
+        </div>
+        ,
+        document.getElementById("app")
+    );
+
+</script>

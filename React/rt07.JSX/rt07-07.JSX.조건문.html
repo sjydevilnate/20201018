@@ -34,7 +34,68 @@
 
 <!-- react 플러그인 include   -->
 <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+<script type="text/babel">
+    // 임포트 선언. 플러그인 방식에서는 필요 없음.
+    // import React from 'react';
+    // import React, {Component} from 'react';
+    // import ReactDOM from 'react-dom';
 
+    console.log(React);
+    console.log(React.Component);
+    console.log(ReactDOM);
 
+    var condition= true;
+    var loginButton ="";
+    if( condition  ){
+        loginButton = (
+            <p>
+                로그아웃
+            </p>
+        );
+    }
+    else {
+        loginButton = (
+            <p>
+                로그인
+            </p>
+        );
+    }
 
-
+    var text = 'awesome!!!!';
+    ReactDOM.render(
+        <div>
+            <div>
+                {loginButton}
+            </div>
+			<hr/>
+
+            <h3>표현식</h3>
+            <div id={condition ? 'msg' : null}>Hello World!</div>
+            <h2>{text} </h2>
+
+            <h3>if~else statment</h3>
+            {condition ? '참' : '거짓'}
+            <br />
+            {condition && text ? '있네요' : '없네요'}
+
+            <h3>if~else statment</h3>
+
+            <h3>swithc statment</h3>
+            <p>
+                {((color) => {
+                    switch (color) {
+                        case "red": return "#FF0000";
+                        case "green": return "#00FF00";
+                        case "blue": return "#0000FF";
+                        default: return "#FFFFFF";
+                    }
+                })()}
+            </p>
+        </div>
+        ,
+        document.getElementById("app")
+    );
+</script>

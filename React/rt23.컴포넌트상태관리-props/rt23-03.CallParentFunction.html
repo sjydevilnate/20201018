@@ -61,7 +61,6 @@
 </body>
 </html>
 
-
 <!-- react 플러그인 include   -->
 <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">/* JSX를 자바스크립트로 변환 */</script>
@@ -78,27 +77,29 @@
     
     class Child extends React.Component {
         doParentToggleFromChild = (event)=>{
+            // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
             console.log(event.target);
 
-            // 부모 메서드 호출()
             if( event.shiftKey === true){
+                // 부모 메서드 호출
                 this.props.doParentToggleFromChild(10);
             }
             else {
+                // 부모 메서드 호출
                 this.props.doParentToggleFromChild(1);
             }
         }
         render() {
             return (
-            <div id="child">
-                {this.props.counter}
-                <br/>
-                I am a child
-                <br/>
-                <button onClick={this.doParentToggleFromChild}>
-                    toggle
-                </button>
-            </div>
+                <div id="child">
+                    {this.props.counter}
+                    <br/>
+                    I am a child
+                    <br/>
+                    <button onClick={this.doParentToggleFromChild}>
+                        toggle
+                    </button>
+                </div>
             )
         }
     }
@@ -106,7 +107,7 @@
     class Parent extends React.Component {
     
         state = {
-            counter: 0,
+            counter: 0
         }
         style = {
 
@@ -134,21 +135,25 @@
             console.log(event.target)//
         }
         render() {
+            /* 자식으로 넘기고 싶은 것 : state.counter, func.doParentToggle() 메서드 */
             return (
-            <div id="parent">
-                <Child {...this.state} 
-                       {...this.props} 
-                       {...this.func} 
-                       {...this.style} 
-                >
-                </Child>
-            </div>
+                <div id="parent">
+                    I am a parent
+                    <br/>
+                    <Child {...this.state} 
+                           {...this.props} 
+                           {...this.func} 
+                           {...this.style} 
+                    >
+                    </Child>
+                </div>
             )
         }
     }
     
     ReactDOM.render(
         <Parent></Parent>
-        , document.getElementById("app")
+        , 
+        document.getElementById("app")
     )
 </script>

@@ -156,9 +156,18 @@
     console.log(React)
     console.log(ReactDOM)
     
-    class Label extends React.Component {  
-        state = {
-            styleLabel : {
+    class Label extends React.Component {
+        style = {
+            /*
+            .label {
+                font-family: sans-serif;
+                font-weight: bold;
+                padding: 13px;
+                margin: 0;
+                text-align: center;
+            }
+            */
+            styleLabel: {
                 fontFamily: "sans-serif",
                 fontWeight: "bold",
                 padding: "13px",
@@ -168,7 +177,7 @@
         }  
         render() {
             const { style1, color } = this.props;
-            const newstyle = { ...this.state.styleLabel, ...style1 }
+            const newstyle = { ...this.style.styleLabel, ...style1 }
             return (
                 <div style={newstyle}>
                     {this.props.color}
@@ -176,9 +185,9 @@
             )
         }
     }
-        
+    
     class Square extends React.Component {
-        state = {
+        style = {
             styleSqure : {
                 height: "150px",
                 backgroundColor: "#ff6663",
@@ -186,7 +195,7 @@
         }
         render() {
             const newstyle = { 
-                ...this.state.styleSqure, 
+                ...this.style.styleSqure, 
                 backgroundColor: this.props.color,
             }
             return (
@@ -198,7 +207,7 @@
     
     class Card extends React.Component {
     
-        state ={
+        style ={
             style1: {
                 fontSize:"25pt",
             },
@@ -227,9 +236,9 @@
                 color:"#ff6663",
             }
             */
-            const newprops = {...this.state, ...this.props };
+            const newprops = {...this.style, ...this.props };
             return (
-                <div style={this.state.styleCard}>
+                <div style={this.style.styleCard}>
                     <Square {...newprops}></Square>
                     <Label {...newprops}></Label>                    
                 </div>
@@ -244,5 +253,5 @@
         </div>
         ,
         document.getElementById("app")
-    )     
+    )
 </script>

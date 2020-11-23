@@ -55,6 +55,55 @@
 
 <!-- react 플러그인 include   -->
 <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+<script type="text/babel">
+    // import React from 'react';
+    // import ReactDOM from 'react-dom';
 
-
-
+    console.log(React);
+    console.log(ReactDOM);
+    ReactDOM.render(
+        React.createElement(
+            "div" ,
+            {id: "wrap"} ,
+            React.createElement(
+                "h3" ,
+                null ,
+                "세종대왕"
+            ),
+            React.createElement(
+                "ul" ,
+                null ,
+                React.createElement(
+                    "li" ,
+                    null ,
+                    "이순신"
+                ),
+                React.createElement(
+                    "li" ,
+                    null ,
+                    "광개토"
+                ),
+                React.createElement(
+                    "li" ,
+                    null ,
+                    "왕건"
+                )
+            ),
+            React.createElement(
+                "div",
+                {className: "sidebar"},
+                "sidebar"
+            ),
+            React.createElement(
+                "p",
+                {color: "blue", shadowSize: 2},
+                "Click Me"
+            )
+        )
+        ,
+        document.getElementById("app")
+    )
+</script>

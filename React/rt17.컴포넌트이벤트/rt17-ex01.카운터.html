@@ -176,26 +176,26 @@
             val: null,
         }
         style = {
-            styleBackground: { 
-
+            styleBackground: {
+                padding: "50px ",
+                backgroundColor : "#ffc53a" ,
+                width : "250px" ,
+                height : "100px" ,
+                borderRadius : "10px" ,
+                textAlign :  "center",
             },
-            styleButton: { 
-
-            }
-        }
-        constructor(props) {
-            super()
-            // this 바인딩
-        }
-        componentDidMount() {
-            // 마운트 완료 후에  : 페이지 load 될 때 한번
-        }
-        componentDidUpdate(prevProps, prevState) {
-            // 업데이트 완료 후에 : 여러번, state 가 변경될 때마다
+            styleButton: {
+                fontSize : "1em" ,
+                width : "30px" ,
+                height : "30px" ,
+                fontFamily : "sans-serif" ,
+                color : "#333333" ,
+                fontWeight : "bold" ,
+                lineHeight : "3px",
         }
         increase = (event)=>{
             // 이벤트 핸들러는 화살표 함수로 만들면 this를 bind() 생략해도 된다
-            debugger;
+            
             console.log(event.target)//
             /*
             {
@@ -212,7 +212,7 @@
 
             */
            
-            if( event.shiftKey === true ){
+            if( event.shiftKey ){
                 // 10 더하기
                 this.setState({
                     ...this.state,
@@ -236,6 +236,7 @@
             )
         }
     }
+    
     ReactDOM.render(
         <CounterContainer></CounterContainer>
         ,

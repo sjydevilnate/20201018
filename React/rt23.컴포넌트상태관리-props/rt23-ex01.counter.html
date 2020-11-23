@@ -52,8 +52,8 @@
           Child 컴포넌트에서  - 버튼을 클릭하면 sub-counter 이벤트 발생
 
         child-componet 템플릿 태그는 아래와 같이 설정하시오.
-          <div className="component-child">
-              Child counter : {this.props.counter} <br />
+          <div class="component-child">
+              Child counter : {this.props.counter} <br>
               <button name="child" onClick="addCounter">+</button>
               <button name="child" onClick="subCounter">-</button>
           </div>
@@ -70,8 +70,8 @@
     </xmp>
     <hr>
 
-    <div id="app" className="component-parent">
-        Parent counter : {this.state.counter} <br />
+    <div id="app" class="component-parent">
+        Parent counter : {this.state.counter} <br>
         <button name="parent" onClick={this.addCounter}>+</button>
         <button name="parent" onClick={this.subCounter}>-</button>
         <p></p>

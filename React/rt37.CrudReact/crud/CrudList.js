@@ -1,21 +1,23 @@
-import React, { Component } from 'react'
+import React from 'react'
 import CrudListItem from './CrudListItem'
 
 class CrudList extends React.Component {
+
     render() {
-        const rows = this.props.list // == CrudApp.state.list
-        const trs = rows.map( (item,index)=>{
+        
+        const list = this.props.list // CrudApp.state.list 
+        const arrs = list.map( (item, index)=>{
             /* item = {id: 1, name:"슈퍼맨", power: 100 }, */
             return (
                 <CrudListItem 
-                    key={item.id} 
-                    man={item} 
-                    {...this.props} 
+                    key={index} 
+                    item={item} 
+                    {...this.props}
                 >
                 </CrudListItem>
             )
         })
-        
+
         return (
             <table>
                 <thead>
@@ -27,11 +29,11 @@ class CrudList extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {trs}
+                    {arrs}
                 </tbody>
             </table>
         )
     }
 }
 
-export default CrudList;
+export default CrudList

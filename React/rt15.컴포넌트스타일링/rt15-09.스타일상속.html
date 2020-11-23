@@ -38,4 +38,70 @@
 
 <!-- react 플러그인 include   -->
 <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js"> /* import { React} from 'react'; */</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">/* import { ReactDOM } from 'react-dom'; */</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">/* JSX를 자바스크립트로 변환 */</script>
+<script type="text/babel">
+    // 컴포넌트 만들기 : StyleInherit
+    //import React, { Component } from 'react';
+    //import ReactDOM from 'react-dom'
+    
+    console.log(React);
+    console.log(ReactDOM);
+    
+    class StyleInherit extends React.Component {
+        // width: 250px; background-color: black; padding: 0px; border-radius: 10px; text-align: center; margin: 0px; font-family: sans-serif; color: white;"
+        styleDiv = {
+            width: "250px",
+            backgroundColor:"black",
+            padding: "0px",
+            borderRadius: "10px",
+            textAlign: "center",
+            margin: "0px",
+            fontFamily: "sans-serif",
+            color: "white"
+        }
+        // color: rgb(102, 255, 255); font-size: 50px;
+        styleH1 = {
+            color: "rgb(102, 255, 255)",
+            fontSize: "50px",
+        }
+        // margin: 0px; padding: 0px; font-family: sans-serif; color: white;
+        styleH2 = {
+            margin: "0px",
+            padding: "0px",
+            fontFamily: "sans-serif",
+            color: "white"
+        }
+        // margin: 0px; padding: 0px; font-family: sans-serif; color: white; font-size: 38px;
+        styleEmphasis = {
+            ...this.styleH2,
+            fontSize: "38px"
+        }
+        // margin: 0px; padding: 0px; font-family: sans-serif; color: white; font-size: 17px; opacity: 0.5; 
+        styleP = {
+            ...this.styleEmphasis,
+            fontSize: "17px",
+            opacity: "0.5"
+        }
+        render() {
+            return (
+                <div style={this.styleDiv}>
+                    <h1 style={this.styleH1}>2700</h1>
+                    <h2 style={this.styleH2}>번개</h2>
+                    <h2 style={this.styleEmphasis}>강조</h2>
+                    <p  style={this.styleP}>
+                        since you loaded this example
+                    </p>
+                </div>
+            );
+        }
+    }
+    
+    ReactDOM.render( 
+        <StyleInherit></StyleInherit> 
+        , 
+        document.getElementById("app") 
+    )
 
+</script>
